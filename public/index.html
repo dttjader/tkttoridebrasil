@@ -1,268 +1,1351 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket to Ride Companion</title>
+    <title>Ticket To Ride Companion</title>
     <style>
         :root {
-            --primary: #8b0000;
-            --secondary: #f4e4bc;
-            --accent: #daa520;
-            --text: #333;
-            --success: #28a745;
-            --error: #dc3545;
+            --primary: #1a237e;
+            --primary-light: #3949ab;
+            --accent: #ff6f00;
+            --bg: #f5f7fa;
+            --card: #ffffff;
+            --text: #263238;
+            --text-muted: #607d8b;
+            --border: #cfd8dc;
+            --success: #2e7d32;
+            --danger: #c62828;
+            --warning: #f9a825;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--secondary);
+            background: var(--bg);
             color: var(--text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 16px;
         }
 
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            border: 2px solid var(--primary);
+        h1, h2, h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
         }
 
         h1 {
-            color: var(--primary);
             text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-top: 8px;
         }
 
-        .status-bar {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            text-align: center;
-            font-weight: bold;
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .screen {
             display: none;
         }
 
-        .status-success { background-color: #d4edda; color: var(--success); border: 1px solid #c3e6cb; display: block; }
-        .status-error { background-color: #f8d7da; color: var(--error); border: 1px solid #f5c6cb; display: block; }
-        .status-loading { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; display: block; }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
+        .screen.active {
+            display: block;
         }
 
-        input[type="file"] {
-            padding: 10px;
-            border: 1px dashed var(--primary);
-            border-radius: 4px;
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.15);
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s, background 0.2s;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover:not(:disabled) { background: var(--primary-light); }
+
+        .btn-accent { background: var(--accent); color: #fff; }
+        .btn-accent:hover:not(:disabled) { background: #e65100; }
+
+        .btn-success { background: var(--success); color: #fff; }
+        .btn-success:hover:not(:disabled) { background: #1b5e20; }
+
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover:not(:disabled) { background: #b71c1c; }
+
+        .btn-warning { background: var(--warning); color: #fff; }
+        .btn-warning:hover:not(:disabled) { background: #f57f17; }
+
+        .btn-secondary { background: var(--text-muted); color: #fff; }
+        .btn-secondary:hover:not(:disabled) { background: #455a64; }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .hidden { display: none !important; }
+
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 320px;
+            overflow-y: auto;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background: #e8eaf6;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
             cursor: pointer;
         }
 
-        .search-box {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 500;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .route-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        .table-wrapper {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-top: 12px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            background: #fff;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
         }
 
         th {
-            background-color: var(--primary);
-            color: white;
-            padding: 12px;
-            text-align: left;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
 
-        td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+        tbody tr:hover {
+            background: #f5f7fa;
         }
 
-        tr:nth-child(even) { background-color: #f9f9f9; }
-        tr:hover { background-color: #f1f1f1; }
+        select.route-owner {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
 
-        .route-color {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 3px;
-            vertical-align: middle;
-            margin-right: 8px;
-            border: 1px solid #999;
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .modal h3 {
+            margin-top: 0;
+        }
+
+        .error {
+            color: var(--danger);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .info {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        .transition-panel {
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .transition-panel h2 {
+            font-size: 2rem;
+        }
+
+        .player-name-display {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin: 16px 0;
+        }
+
+        .scoreboard {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .score-player {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            background: #fff;
+        }
+
+        .score-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .score-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .toggle-goals {
+            font-size: 0.95rem;
+            padding: 8px 12px;
+        }
+
+        .goals-list {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .goals-list.visible {
+            display: flex;
+        }
+
+        .goal-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #fafafa;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .goal-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--success);
+        }
+
+        .goal-row label {
+            margin: 0;
+            flex: 1;
+        }
+
+        .goal-points {
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .goal-points.fail {
+            color: var(--danger);
+        }
+
+        .winner {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 24px;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #e8eaf6;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .route-owner-display {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .small-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        @media (max-width: 600px) {
+            .row { flex-direction: column; gap: 0; }
+            .col { min-width: auto; }
+            h1 { font-size: 1.5rem; }
+            .actions { flex-direction: column; }
+            .btn { width: 100%; }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>Ticket to Ride Companion</h1>
+        <h1>🚂 Ticket To Ride Companion</h1>
 
-        <div id="status" class="status-bar">Iniciando...</div>
+        <!-- TELA 1: SETUP -->
+        <div id="screen-setup" class="screen active">
+            <div class="card">
+                <h2>Setup da Partida</h2>
 
-        <div class="controls">
-            <label for="csvFile">Upload Manual (Fallback):</label>
-            <input type="file" id="csvFile" accept=".csv">
+                <label for="jsonFile">Importar JSON de Partida</label>
+                <input type="file" id="jsonFile" accept=".json">
+                <div id="jsonError" class="error"></div>
+
+                <hr style="margin: 24px 0; border: none; border-top: 1px solid var(--border);">
+
+                <div class="row">
+                    <div class="col">
+                        <label for="numPlayers">Número de Jogadores</label>
+                        <input type="number" id="numPlayers" min="1" max="6" value="3">
+                    </div>
+                    <div class="col">
+                        <label for="initialGoals">Metas Iniciais por Jogador</label>
+                        <input type="number" id="initialGoals" min="1" max="10" value="3">
+                    </div>
+                    <div class="col">
+                        <label for="minKeep">Mínimo a Manter</label>
+                        <input type="number" id="minKeep" min="0" max="10" value="2">
+                    </div>
+                </div>
+
+                <div id="playerNames"></div>
+
+                <div class="actions">
+                    <button id="btnStart" class="btn btn-primary">Iniciar Partida</button>
+                </div>
+            </div>
         </div>
 
-        <input type="text" id="searchInput" class="search-box" placeholder="Buscar por cidade ou cor...">
+        <!-- TELA 2: SELEÇÃO INICIAL -->
+        <div id="screen-initial" class="screen">
+            <div class="card">
+                <h2>Seleção Inicial de Metas</h2>
+                <div class="info">Vez de <strong id="initialPlayerName">Jogador</strong></div>
+                <p class="info">Escolha pelo menos <strong id="minKeepDisplay">2</strong> meta(s) para manter.</p>
+                <div id="initialGoalsList" class="checkbox-list"></div>
+                <div id="initialError" class="error"></div>
+                <div class="actions">
+                    <button id="btnConfirmInitial" class="btn btn-primary">Confirmar Escolhas</button>
+                </div>
+            </div>
+        </div>
 
-        <div id="tableContainer">
-            <table id="routesTable">
-                <thead>
-                    <tr>
-                        <th>Origem</th>
-                        <th>Destino</th>
-                        <th>Cor</th>
-                        <th>Tamanho</th>
-                        <th>Pontos</th>
-                    </tr>
-                </thead>
-                <tbody id="routesBody">
-                    <!-- Dados serão inseridos aqui -->
-                </tbody>
-            </table>
+        <!-- TELA 3: TRANSIÇÃO -->
+        <div id="screen-transition" class="screen">
+            <div class="card transition-panel">
+                <h2>Passe o dispositivo</h2>
+                <p class="info">Não deixe os outros jogadores ver suas metas.</p>
+                <div class="player-name-display" id="transitionPlayerName">Jogador</div>
+                <button id="btnNextPlayer" class="btn btn-primary">Próximo Jogador</button>
+            </div>
+        </div>
+
+        <!-- TELA 4: PAINEL DA PARTIDA -->
+        <div id="screen-game" class="screen">
+            <div class="card">
+                <div class="status-bar">
+                    <span id="gameStatus">Partida em andamento</span>
+                    <span id="deckCount">Metas no baralho: 0</span>
+                </div>
+
+                <div class="actions">
+                    <button id="btnBuyGoals" class="btn btn-accent">Comprar Novas Metas</button>
+                    <button id="btnExportJSON" class="btn btn-secondary">Exportar JSON</button>
+                    <button id="btnFinishGame" class="btn btn-success">Finalizar Partida</button>
+                </div>
+
+                <hr style="margin: 24px 0; border: none; border-top: 1px solid var(--border);">
+
+                <h2>Acompanhar Rotas</h2>
+                <label for="routeSearch">Buscar rota</label>
+                <input type="text" id="routeSearch" placeholder="Digite origem ou destino...">
+                <div class="table-wrapper">
+                    <table id="routesTable">
+                        <thead>
+                            <tr>
+                                <th>Origem</th>
+                                <th>Destino</th>
+                                <th>Tamanho</th>
+                                <th>Pontos</th>
+                                <th>Dono</th>
+                            </tr>
+                        </thead>
+                        <tbody id="routesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA 5: FIM DE JOGO -->
+        <div id="screen-end" class="screen">
+            <div class="card">
+                <h2>Placar Final</h2>
+                <div id="winnerDisplay" class="winner"></div>
+                <div id="scoreboard" class="scoreboard"></div>
+                <div class="actions">
+                    <button id="btnNewGame" class="btn btn-primary">Nova Partida</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: COMPRAR NOVAS METAS -->
+    <div id="buyModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Comprar Novas Metas</h3>
+            <p class="info">Escolha pelo menos <strong id="buyMinKeep">1</strong> meta para manter.</p>
+            <label for="buyPlayerSelect">Jogador que está comprando:</label>
+            <select id="buyPlayerSelect"></select>
+            <div id="buyGoalsList" class="checkbox-list"></div>
+            <div id="buyError" class="error"></div>
+            <div class="actions">
+                <button id="btnConfirmBuy" class="btn btn-primary">Confirmar</button>
+                <button id="btnCancelBuy" class="btn btn-danger">Cancelar</button>
+            </div>
         </div>
     </div>
 
     <script>
-        let allRoutes = [];
+        (function() {
+            'use strict';
 
-        // 1. Função para carregar CSV automaticamente ao iniciar
-        window.addEventListener('DOMContentLoaded', () => {
-            loadRoutesFromServer();
-        });
-
-        // 2. Carregar do Vercel (/rotas.csv)
-        async function loadRoutesFromServer() {
-            const statusDiv = document.getElementById('status');
-            showStatus('Carregando rotas do servidor...', 'loading');
-
-            try {
-                const response = await fetch('/rotas.csv');
-                
-                if (!response.ok) {
-                    throw new Error(`Erro ao carregar arquivo: ${response.status} ${response.statusText}`);
-                }
-
-                const csvData = await response.text();
-                processCSV(csvData);
-                showStatus('Rotas carregadas com sucesso!', 'success');
-            } catch (error) {
-                console.error('Erro no carregamento automático:', error);
-                showStatus('Arquivo rotas.csv não encontrado no servidor. Use o upload manual.', 'error');
-            }
-        }
-
-        // 3. Tratamento de Upload Manual (Fallback)
-        document.getElementById('csvFile').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                processCSV(e.target.result);
-                showStatus('Arquivo manual carregado com sucesso!', 'success');
+            const pointsByLength = {
+                1: 1,
+                2: 2,
+                3: 4,
+                4: 7,
+                5: 10,
+                6: 15,
+                7: 18,
+                8: 21,
+                9: 27,
+                10: 30,
+                11: 33,
+                12: 36,
+                13: 39,
+                14: 42,
+                15: 45,
+                16: 48,
+                17: 51,
+                18: 54,
+                19: 57,
+                20: 60,
+                21: 63,
+                22: 66,
+                23: 69,
+                24: 72,
+                25: 75,
+                26: 78,
+                27: 81,
+                28: 84,
+                29: 87,
+                30: 90
             };
-            reader.onerror = () => showStatus('Erro ao ler o arquivo manual.', 'error');
-            reader.readAsText(file);
-        });
 
-        // 4. Processamento dos dados CSV
-        function processCSV(csvText) {
-            const lines = csvText.split(/\r?\n/);
-            const result = [];
-            
-            // Assume que a primeira linha é o cabeçalho: origem,destino,cor,tamanho,pontos
-            for (let i = 1; i < lines.length; i++) {
-                if (!lines[i].trim()) continue;
-                
-                const columns = lines[i].split(',');
-                if (columns.length >= 5) {
-                    result.push({
-                        origem: columns[0].trim(),
-                        destino: columns[1].trim(),
-                        cor: columns[2].trim(),
-                        tamanho: columns[3].trim(),
-                        pontos: columns[4].trim()
+            const state = {
+                players: [],
+                boardRoutes: [],
+                ticketsPool: [],
+                initialConfig: {
+                    numPlayers: 3,
+                    initialGoals: 3,
+                    minKeep: 2
+                },
+                currentInitialPlayer: 0,
+                drawnInitialGoals: [],
+                drawnBuyGoals: [],
+                buyGoalsDrawn: false,
+                gameStarted: false,
+                routeOwners: {}
+            };
+
+            const els = {
+                jsonFile: document.getElementById('jsonFile'),
+                jsonError: document.getElementById('jsonError'),
+                numPlayers: document.getElementById('numPlayers'),
+                initialGoals: document.getElementById('initialGoals'),
+                minKeep: document.getElementById('minKeep'),
+                playerNames: document.getElementById('playerNames'),
+                btnStart: document.getElementById('btnStart'),
+                screenSetup: document.getElementById('screen-setup'),
+                screenInitial: document.getElementById('screen-initial'),
+                screenTransition: document.getElementById('screen-transition'),
+                screenGame: document.getElementById('screen-game'),
+                screenEnd: document.getElementById('screen-end'),
+                initialPlayerName: document.getElementById('initialPlayerName'),
+                minKeepDisplay: document.getElementById('minKeepDisplay'),
+                initialGoalsList: document.getElementById('initialGoalsList'),
+                initialError: document.getElementById('initialError'),
+                btnConfirmInitial: document.getElementById('btnConfirmInitial'),
+                transitionPlayerName: document.getElementById('transitionPlayerName'),
+                btnNextPlayer: document.getElementById('btnNextPlayer'),
+                btnBuyGoals: document.getElementById('btnBuyGoals'),
+                btnExportJSON: document.getElementById('btnExportJSON'),
+                btnFinishGame: document.getElementById('btnFinishGame'),
+                routeSearch: document.getElementById('routeSearch'),
+                routesTableBody: document.getElementById('routesTableBody'),
+                gameStatus: document.getElementById('gameStatus'),
+                deckCount: document.getElementById('deckCount'),
+                buyModal: document.getElementById('buyModal'),
+                buyPlayerSelect: document.getElementById('buyPlayerSelect'),
+                buyGoalsList: document.getElementById('buyGoalsList'),
+                buyMinKeep: document.getElementById('buyMinKeep'),
+                buyError: document.getElementById('buyError'),
+                btnConfirmBuy: document.getElementById('btnConfirmBuy'),
+                btnCancelBuy: document.getElementById('btnCancelBuy'),
+                scoreboard: document.getElementById('scoreboard'),
+                winnerDisplay: document.getElementById('winnerDisplay'),
+                btnNewGame: document.getElementById('btnNewGame')
+            };
+
+            function getPoints(length) {
+                const len = parseInt(length, 10) || 0;
+                return pointsByLength[len] || 0;
+            }
+
+            function shuffle(array) {
+                const arr = array.slice();
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function parseCSV(text) {
+                const cleaned = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+                if (!cleaned.trim()) {
+                    throw new Error('O arquivo CSV está vazio.');
+                }
+                const delimiter = cleaned.includes(';') ? ';' : ',';
+                const lines = cleaned.split('\n').filter(line => line.trim() !== '');
+                if (lines.length < 2) {
+                    throw new Error('O CSV deve conter pelo menos uma linha de cabeçalho e uma linha de dados.');
+                }
+                const headers = parseLine(lines[0], delimiter).map(h => h.trim().toLowerCase());
+                const expected = ['origem', 'destino', 'tamanho', 'meta'];
+                const missing = expected.filter(e => !headers.includes(e));
+                if (missing.length > 0) {
+                    throw new Error('Cabeçalhos obrigatórios ausentes: ' + missing.join(', '));
+                }
+                const idx = {
+                    origem: headers.indexOf('origem'),
+                    destino: headers.indexOf('destino'),
+                    tamanho: headers.indexOf('tamanho'),
+                    meta: headers.indexOf('meta')
+                };
+                const rows = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cells = parseLine(lines[i], delimiter);
+                    if (cells.length < 3) continue;
+                    const origem = cells[idx.origem] || '';
+                    const destino = cells[idx.destino] || '';
+                    const tamanho = parseInt(cells[idx.tamanho], 10) || 0;
+                    const metaRaw = cells[idx.meta] !== undefined ? cells[idx.meta].trim() : '';
+                    const meta = metaRaw === '' ? 0 : (parseInt(metaRaw, 10) || 0);
+                    if (!origem || !destino) continue;
+                    rows.push({
+                        id: crypto.randomUUID(),
+                        origem: origem.trim(),
+                        destino: destino.trim(),
+                        tamanho: tamanho,
+                        meta: meta,
+                        points: meta === 1 ? tamanho : getPoints(tamanho)
                     });
                 }
+                return rows;
             }
-            
-            allRoutes = result;
-            renderTable(allRoutes);
-        }
 
-        // 5. Renderização da Tabela
-        function renderTable(routes) {
-            const tbody = document.getElementById('routesBody');
-            tbody.innerHTML = '';
+            function parseLine(line, delimiter) {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"') {
+                        if (inQuotes && line[i + 1] === '"') {
+                            current += '"';
+                            i++;
+                        } else {
+                            inQuotes = !inQuotes;
+                        }
+                    } else if (char === delimiter && !inQuotes) {
+                        result.push(current);
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                result.push(current);
+                return result;
+            }
 
-            routes.forEach(route => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${route.origem}</td>
-                    <td>${route.destino}</td>
-                    <td><span class="route-color" style="background-color: ${translateColor(route.cor)}"></span>${route.cor}</td>
-                    <td>${route.tamanho}</td>
-                    <td>${route.pontos}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
+            function splitRoutes(rows) {
+                const boardRoutes = [];
+                const ticketsPool = [];
+                rows.forEach(row => {
+                    if (row.meta === 1) {
+                        ticketsPool.push({ ...row, completed: false, failed: false });
+                    } else {
+                        boardRoutes.push({ ...row });
+                    }
+                });
+                return { boardRoutes, ticketsPool };
+            }
 
-        // 6. Filtro de Busca
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            const term = e.target.value.toLowerCase();
-            const filtered = allRoutes.filter(r => 
-                r.origem.toLowerCase().includes(term) || 
-                r.destino.toLowerCase().includes(term) || 
-                r.cor.toLowerCase().includes(term)
-            );
-            renderTable(filtered);
-        });
+            function renderPlayerNameInputs() {
+                const count = parseInt(els.numPlayers.value, 10) || 1;
+                els.playerNames.innerHTML = '';
+                for (let i = 1; i <= count; i++) {
+                    const label = document.createElement('label');
+                    label.textContent = `Nome do Jogador ${i}`;
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = `playerName${i}`;
+                    input.placeholder = `Jogador ${i}`;
+                    input.value = `Jogador ${i}`;
+                    els.playerNames.appendChild(label);
+                    els.playerNames.appendChild(input);
+                }
+            }
 
-        // Helpers
-        function showStatus(message, type) {
-            const statusDiv = document.getElementById('status');
-            statusDiv.textContent = message;
-            statusDiv.className = 'status-bar status-' + type;
-        }
+            function showScreen(id) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(id).classList.add('active');
+            }
 
-        function translateColor(colorName) {
-            const colors = {
-                'Vermelho': '#e31a1c',
-                'Azul': '#1f78b4',
-                'Verde': '#33a02c',
-                'Amarelo': '#ffd700',
-                'Preto': '#333333',
-                'Branco': '#ffffff',
-                'Rosa': '#fb9a99',
-                'Laranja': '#ff7f00',
-                'Cinza': '#a9a9a9',
-                'Coringa': 'linear-gradient(45deg, red, blue, green, yellow)'
-            };
-            return colors[colorName] || '#ccc';
-        }
+            function readFile(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = e => resolve(e.target.result);
+                    reader.onerror = () => reject(new Error('Erro ao ler arquivo.'));
+                    reader.readAsText(file);
+                });
+            }
+
+            // *** NOVA FUNÇÃO ***
+            // Substitua [USUARIO] e [REPOSITORIO] pelos seus dados
+            async function loadRoutesFromGitHub() {
+                const url = 'https://raw.githubusercontent.com/[USUARIO]/[REPOSITORIO]/main/public/rotas.csv';
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const text = await response.text();
+                    const rows = parseCSV(text);
+                    const { boardRoutes, ticketsPool } = splitRoutes(rows);
+                    if (boardRoutes.length === 0 && ticketsPool.length === 0) {
+                        throw new Error('Nenhuma rota válida encontrada no arquivo.');
+                    }
+                    state.boardRoutes = boardRoutes;
+                    state.ticketsPool = shuffle(ticketsPool);
+                    alert(`Rotas carregadas do GitHub: ${boardRoutes.length} rotas de tabuleiro e ${state.ticketsPool.length} metas.`);
+                } catch (err) {
+                    alert('Erro ao carregar rotas do GitHub: ' + err.message);
+                }
+            }
+
+            async function handleJSON() {
+                els.jsonError.textContent = '';
+                const file = els.jsonFile.files[0];
+                if (!file) return;
+                try {
+                    const text = await readFile(file);
+                    const data = JSON.parse(text);
+                    if (!data.players || !data.boardRoutes || !data.ticketsPool) {
+                        throw new Error('JSON inválido: faltam campos obrigatórios.');
+                    }
+                    state.players = data.players;
+                    state.boardRoutes = data.boardRoutes;
+                    state.ticketsPool = data.ticketsPool;
+                    state.initialConfig = data.initialConfig || { numPlayers: state.players.length, initialGoals: 3, minKeep: 2 };
+                    state.routeOwners = data.routeOwners || {};
+                    state.buyGoalsDrawn = data.buyGoalsDrawn || false;
+                    state.drawnBuyGoals = data.drawnBuyGoals || [];
+                    state.gameStarted = true;
+                    els.numPlayers.value = state.initialConfig.numPlayers;
+                    els.initialGoals.value = state.initialConfig.initialGoals;
+                    els.minKeep.value = state.initialConfig.minKeep;
+                    renderPlayerNameInputs();
+                    state.players.forEach((p, i) => {
+                        const input = document.getElementById(`playerName${i + 1}`);
+                        if (input) input.value = p.name;
+                    });
+                    startGame(false);
+                } catch (err) {
+                    els.jsonError.textContent = err.message;
+                }
+            }
+
+            function startGame(runInitialSelection = true) {
+                if (state.boardRoutes.length === 0 && state.ticketsPool.length === 0) {
+                    alert('Importe um CSV de rotas antes de iniciar.');
+                    return;
+                }
+                const count = parseInt(els.numPlayers.value, 10) || 1;
+                const initialGoals = parseInt(els.initialGoals.value, 10) || 1;
+                const minKeep = parseInt(els.minKeep.value, 10) || 0;
+                if (count < 1 || count > 6) {
+                    alert('Número de jogadores deve estar entre 1 e 6.');
+                    return;
+                }
+                if (minKeep > initialGoals) {
+                    alert('Mínimo a manter não pode ser maior que o número de metas iniciais.');
+                    return;
+                }
+                if (state.ticketsPool.length < count * initialGoals) {
+                    alert('Baralho de metas insuficiente para a configuração atual.');
+                    return;
+                }
+                state.initialConfig = { numPlayers: count, initialGoals, minKeep };
+                if (!state.gameStarted || state.players.length !== count) {
+                    state.players = [];
+                    for (let i = 1; i <= count; i++) {
+                        const input = document.getElementById(`playerName${i}`);
+                        const name = input && input.value.trim() ? input.value.trim() : `Jogador ${i}`;
+                        state.players.push({
+                            id: crypto.randomUUID(),
+                            name: name,
+                            goals: [],
+                            boardPoints: 0
+                        });
+                    }
+                }
+                state.gameStarted = true;
+                if (runInitialSelection) {
+                    state.currentInitialPlayer = 0;
+                    startInitialSelection();
+                } else {
+                    showScreen('screen-game');
+                    renderGamePanel();
+                }
+            }
+
+            function startInitialSelection() {
+                if (state.currentInitialPlayer >= state.players.length) {
+                    showScreen('screen-game');
+                    renderGamePanel();
+                    return;
+                }
+                const player = state.players[state.currentInitialPlayer];
+                const goals = [];
+                for (let i = 0; i < state.initialConfig.initialGoals; i++) {
+                    if (state.ticketsPool.length === 0) break;
+                    goals.push(state.ticketsPool.shift());
+                }
+                state.drawnInitialGoals = goals;
+                els.initialPlayerName.textContent = player.name;
+                els.minKeepDisplay.textContent = state.initialConfig.minKeep;
+                renderGoalCheckboxList(goals, 'initialGoalsList', 'goalCheckbox');
+                els.initialError.textContent = '';
+                showScreen('screen-initial');
+            }
+
+            function renderGoalCheckboxList(goals, containerId, name) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                goals.forEach(goal => {
+                    const item = document.createElement('div');
+                    item.className = 'checkbox-item';
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `${name}_${goal.id}`;
+                    checkbox.name = name;
+                    checkbox.value = goal.id;
+                    checkbox.checked = true;
+                    const label = document.createElement('label');
+                    label.htmlFor = checkbox.id;
+                    label.textContent = `${goal.origem} → ${goal.destino}`;
+                    const info = document.createElement('span');
+                    info.className = 'route-info';
+                    info.textContent = `Tamanho ${goal.tamanho} • ${goal.points} pts`;
+                    item.appendChild(checkbox);
+                    item.appendChild(label);
+                    item.appendChild(info);
+                    container.appendChild(item);
+                });
+            }
+
+            function confirmInitialSelection() {
+                const checked = Array.from(document.querySelectorAll('input[name="goalCheckbox"]:checked'));
+                const min = state.initialConfig.minKeep;
+                if (checked.length < min) {
+                    els.initialError.textContent = `Você deve manter pelo menos ${min} meta(s).`;
+                    return;
+                }
+                const player = state.players[state.currentInitialPlayer];
+                state.drawnInitialGoals.forEach(goal => {
+                    const keep = checked.some(c => c.value === goal.id);
+                    if (keep) {
+                        player.goals.push({ ...goal, completed: false, failed: false });
+                    } else {
+                        state.ticketsPool.push(goal);
+                    }
+                });
+                state.ticketsPool = shuffle(state.ticketsPool);
+                state.currentInitialPlayer++;
+                if (state.currentInitialPlayer < state.players.length) {
+                    showTransition(state.players[state.currentInitialPlayer].name);
+                } else {
+                    showScreen('screen-game');
+                    renderGamePanel();
+                }
+            }
+
+            function showTransition(playerName) {
+                els.transitionPlayerName.textContent = playerName;
+                showScreen('screen-transition');
+            }
+
+            function renderGamePanel() {
+                els.gameStatus.textContent = `Partida em andamento • ${state.players.length} jogadores`;
+                els.deckCount.textContent = `Metas no baralho: ${state.ticketsPool.length}`;
+                renderRoutesTable();
+            }
+
+            function renderRoutesTable() {
+                const search = els.routeSearch.value.trim().toLowerCase();
+                els.routesTableBody.innerHTML = '';
+                state.boardRoutes.forEach(route => {
+                    if (search && !route.origem.toLowerCase().includes(search) && !route.destino.toLowerCase().includes(search)) {
+                        return;
+                    }
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${escapeHtml(route.origem)}</td>
+                        <td>${escapeHtml(route.destino)}</td>
+                        <td>${route.tamanho}</td>
+                        <td>${route.points}</td>
+                        <td>
+                            <select class="route-owner" data-route-id="${route.id}">
+                                <option value="">Sem dono</option>
+                                ${state.players.map(p => `<option value="${p.id}" ${state.routeOwners[route.id] === p.id ? 'selected' : ''}>${escapeHtml(p.name)}</option>`).join('')}
+                            </select>
+                        </td>
+                    `;
+                    els.routesTableBody.appendChild(tr);
+                });
+                bindRouteOwnerChanges();
+            }
+
+            function bindRouteOwnerChanges() {
+                document.querySelectorAll('.route-owner').forEach(select => {
+                    select.addEventListener('change', (e) => {
+                        const routeId = e.target.dataset.routeId;
+                        const value = e.target.value;
+                        if (value) {
+                            state.routeOwners[routeId] = value;
+                        } else {
+                            delete state.routeOwners[routeId];
+                        }
+                        updateBoardPoints();
+                    });
+                });
+            }
+
+            function updateBoardPoints() {
+                state.players.forEach(p => p.boardPoints = 0);
+                state.boardRoutes.forEach(route => {
+                    const ownerId = state.routeOwners[route.id];
+                    if (ownerId) {
+                        const player = state.players.find(p => p.id === ownerId);
+                        if (player) {
+                            player.boardPoints += route.points;
+                        }
+                    }
+                });
+            }
+
+            function setupBuyModal() {
+                els.buyPlayerSelect.innerHTML = '';
+                if (state.players.length === 0) {
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'Nenhum jogador disponível';
+                    option.disabled = true;
+                    option.selected = true;
+                    els.buyPlayerSelect.appendChild(option);
+                    return;
+                }
+                state.players.forEach((p, index) => {
+                    const option = document.createElement('option');
+                    option.value = p.id;
+                    option.textContent = p.name;
+                    if (index === 0) option.selected = true;
+                    els.buyPlayerSelect.appendChild(option);
+                });
+            }
+
+            function openBuyModal() {
+                if (!state.buyGoalsDrawn) {
+                    if (state.ticketsPool.length < 3) {
+                        alert('Não há metas suficientes no baralho para comprar.');
+                        return;
+                    }
+                    const drawn = [];
+                    for (let i = 0; i < 3; i++) {
+                        if (state.ticketsPool.length === 0) break;
+                        drawn.push(state.ticketsPool.shift());
+                    }
+                    state.drawnBuyGoals = drawn;
+                    state.buyGoalsDrawn = true;
+                }
+                setupBuyModal();
+                els.buyMinKeep.textContent = '1';
+                els.buyError.textContent = '';
+                renderGoalCheckboxList(state.drawnBuyGoals, 'buyGoalsList', 'buyGoalCheckbox');
+                els.buyModal.classList.add('active');
+            }
+
+            function closeBuyModal() {
+                els.buyModal.classList.remove('active');
+                renderGamePanel();
+            }
+
+            function confirmBuy() {
+                const checked = Array.from(document.querySelectorAll('input[name="buyGoalCheckbox"]:checked'));
+                if (checked.length < 1) {
+                    els.buyError.textContent = 'Você deve manter pelo menos 1 meta.';
+                    return;
+                }
+                const playerId = els.buyPlayerSelect.value;
+                if (!playerId) {
+                    els.buyError.textContent = 'Selecione um jogador antes de confirmar.';
+                    return;
+                }
+                const player = state.players.find(p => p.id === playerId);
+                if (!player) {
+                    els.buyError.textContent = 'Jogador não encontrado.';
+                    return;
+                }
+                state.drawnBuyGoals.forEach(goal => {
+                    const keep = checked.some(c => c.value === goal.id);
+                    if (keep) {
+                        player.goals.push({ ...goal, completed: false, failed: false });
+                    } else {
+                        state.ticketsPool.push(goal);
+                    }
+                });
+                state.ticketsPool = shuffle(state.ticketsPool);
+                state.drawnBuyGoals = [];
+                state.buyGoalsDrawn = false;
+                els.buyModal.classList.remove('active');
+                renderGamePanel();
+            }
+
+            function exportJSON() {
+                const data = {
+                    version: '1.0',
+                    initialConfig: state.initialConfig,
+                    players: state.players,
+                    boardRoutes: state.boardRoutes,
+                    ticketsPool: state.ticketsPool,
+                    routeOwners: state.routeOwners,
+                    buyGoalsDrawn: state.buyGoalsDrawn,
+                    drawnBuyGoals: state.drawnBuyGoals
+                };
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ticket-to-ride-companion.json';
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            function finishGame() {
+                updateBoardPoints();
+                showScreen('screen-end');
+                renderScoreboard();
+            }
+
+            function renderScoreboard() {
+                els.scoreboard.innerHTML = '';
+
+                const results = state.players.map(p => {
+                    const completed = p.goals.filter(g => g.completed).reduce((sum, g) => sum + g.points, 0);
+                    const failed = p.goals.filter(g => !g.completed).reduce((sum, g) => sum + g.points, 0);
+                    const total = p.boardPoints + completed - failed;
+                    return { player: p, completed, failed, total };
+                });
+
+                const ranking = [...results].sort((a, b) => b.total - a.total);
+
+                const winner = ranking[0];
+                els.winnerDisplay.textContent = winner ? `🏆 Vencedor: ${winner.player.name} com ${winner.total} pontos!` : '';
+
+                const rankingPanel = document.createElement('div');
+                rankingPanel.className = 'card';
+                rankingPanel.id = 'rankingPanel';
+                rankingPanel.innerHTML = '<h2>Painel de Ranking</h2>';
+                const rankingList = document.createElement('div');
+                rankingList.className = 'scoreboard';
+                ranking.forEach((r, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'score-player';
+                    const header = document.createElement('div');
+                    header.className = 'score-header';
+                    const name = document.createElement('h3');
+                    name.textContent = `${index + 1}º • ${r.player.name}`;
+                    const score = document.createElement('div');
+                    score.className = 'score-value';
+                    score.textContent = `${r.total} pts`;
+                    const details = document.createElement('div');
+                    details.className = 'small-note';
+                    details.textContent = `Tabuleiro: ${r.player.boardPoints} • Concluídas: +${r.completed} • Falhas: -${r.failed}`;
+                    header.appendChild(name);
+                    header.appendChild(score);
+                    item.appendChild(header);
+                    item.appendChild(details);
+                    rankingList.appendChild(item);
+                });
+                rankingPanel.appendChild(rankingList);
+                els.scoreboard.appendChild(rankingPanel);
+
+                els.scoreboard.appendChild(document.createElement('hr'));
+
+                const resultsPanel = document.createElement('div');
+                resultsPanel.className = 'card';
+                resultsPanel.innerHTML = '<h2>Resultados Individuais</h2><p class="info">Ordem original dos jogadores para conferência.</p>';
+                const resultsList = document.createElement('div');
+                resultsList.className = 'scoreboard';
+                state.players.forEach((player, index) => {
+                    const r = results.find(res => res.player.id === player.id);
+                    if (!r) return;
+
+                    const card = document.createElement('div');
+                    card.className = 'score-player';
+                    card.id = `playerCard_${player.id}`;
+
+                    const header = document.createElement('div');
+                    header.className = 'score-header';
+                    const name = document.createElement('h3');
+                    name.textContent = `${index + 1}º • ${player.name}`;
+                    const score = document.createElement('div');
+                    score.className = 'score-value';
+                    score.id = `scoreValue_${player.id}`;
+                    score.textContent = `${r.total} pts`;
+                    const details = document.createElement('div');
+                    details.className = 'small-note';
+                    details.id = `details_${player.id}`;
+                    details.textContent = `Tabuleiro: ${r.player.boardPoints} • Concluídas: +${r.completed} • Falhas: -${r.failed}`;
+
+                    const toggle = document.createElement('button');
+                    toggle.className = 'btn btn-secondary toggle-goals';
+                    toggle.textContent = '👁️ Revelar/Ocultar Metas';
+
+                    const goalsList = document.createElement('div');
+                    goalsList.className = 'goals-list';
+                    goalsList.id = `goalsList_${player.id}`;
+
+                    player.goals.forEach(g => {
+                        const row = document.createElement('div');
+                        row.className = 'goal-row';
+
+                        const completedBox = document.createElement('input');
+                        completedBox.type = 'checkbox';
+                        completedBox.id = `completed_${player.id}_${g.id}`;
+                        completedBox.checked = g.completed;
+
+                        const failedBox = document.createElement('input');
+                        failedBox.type = 'checkbox';
+                        failedBox.id = `failed_${player.id}_${g.id}`;
+                        failedBox.checked = g.failed;
+
+                        const label = document.createElement('label');
+                        label.htmlFor = `completed_${player.id}_${g.id}`;
+                        label.textContent = `${g.origem} → ${g.destino} (${g.points} pts)`;
+
+                        const points = document.createElement('span');
+                        points.className = 'goal-points';
+                        points.id = `goalPoints_${player.id}_${g.id}`;
+                        points.textContent = `${g.points} pts`;
+                        if (g.failed) points.classList.add('fail');
+
+                        completedBox.addEventListener('change', () => {
+                            g.completed = completedBox.checked;
+                            if (g.completed) {
+                                g.failed = false;
+                                failedBox.checked = false;
+                            }
+                            updateGoalPoints();
+                        });
+                        failedBox.addEventListener('change', () => {
+                            g.failed = failedBox.checked;
+                            if (g.failed) {
+                                g.completed = false;
+                                completedBox.checked = false;
+                            }
+                            updateGoalPoints();
+                        });
+
+                        row.appendChild(completedBox);
+                        row.appendChild(label);
+                        row.appendChild(points);
+                        goalsList.appendChild(row);
+                    });
+
+                    toggle.addEventListener('click', () => {
+                        goalsList.classList.toggle('visible');
+                    });
+
+                    header.appendChild(name);
+                    header.appendChild(score);
+                    card.appendChild(header);
+                    card.appendChild(details);
+                    card.appendChild(toggle);
+                    card.appendChild(goalsList);
+                    resultsList.appendChild(card);
+                });
+                resultsPanel.appendChild(resultsList);
+                els.scoreboard.appendChild(resultsPanel);
+            }
+
+            function updateGoalPoints() {
+                const results = state.players.map(p => {
+                    const completed = p.goals.filter(g => g.completed).reduce((sum, g) => sum + g.points, 0);
+                    const failed = p.goals.filter(g => !g.completed).reduce((sum, g) => sum + g.points, 0);
+                    const total = p.boardPoints + completed - failed;
+                    return { player: p, completed, failed, total };
+                });
+
+                const ranking = [...results].sort((a, b) => b.total - a.total);
+
+                const winner = ranking[0];
+                els.winnerDisplay.textContent = winner ? `🏆 Vencedor: ${winner.player.name} com ${winner.total} pontos!` : '';
+
+                const rankingPanel = document.getElementById('rankingPanel');
+                if (rankingPanel) {
+                    rankingPanel.innerHTML = '<h2>Painel de Ranking</h2>';
+                    const rankingList = document.createElement('div');
+                    rankingList.className = 'scoreboard';
+                    ranking.forEach((r, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'score-player';
+                        const header = document.createElement('div');
+                        header.className = 'score-header';
+                        const name = document.createElement('h3');
+                        name.textContent = `${index + 1}º • ${r.player.name}`;
+                        const score = document.createElement('div');
+                        score.className = 'score-value';
+                        score.textContent = `${r.total} pts`;
+                        const details = document.createElement('div');
+                        details.className = 'small-note';
+                        details.textContent = `Tabuleiro: ${r.player.boardPoints} • Concluídas: +${r.completed} • Falhas: -${r.failed}`;
+                        header.appendChild(name);
+                        header.appendChild(score);
+                        item.appendChild(header);
+                        item.appendChild(details);
+                        rankingList.appendChild(item);
+                    });
+                    rankingPanel.appendChild(rankingList);
+                }
+
+                state.players.forEach(player => {
+                    const res = results.find(r => r.player.id === player.id);
+                    if (!res) return;
+                    const scoreEl = document.getElementById(`scoreValue_${player.id}`);
+                    if (scoreEl) scoreEl.textContent = `${res.total} pts`;
+                    const detailsEl = document.getElementById(`details_${player.id}`);
+                    if (detailsEl) {
+                        detailsEl.textContent = `Tabuleiro: ${res.player.boardPoints} • Concluídas: +${res.completed} • Falhas: -${res.failed}`;
+                    }
+                    player.goals.forEach(g => {
+                        const ptsSpan = document.getElementById(`goalPoints_${player.id}_${g.id}`);
+                        if (ptsSpan) {
+                            if (g.failed) {
+                                ptsSpan.classList.add('fail');
+                            } else {
+                                ptsSpan.classList.remove('fail');
+                            }
+                        }
+                    });
+                });
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function newGame() {
+                state.players = [];
+                state.boardRoutes = [];
+                state.ticketsPool = [];
+                state.initialConfig = { numPlayers: 3, initialGoals: 3, minKeep: 2 };
+                state.currentInitialPlayer = 0;
+                state.drawnInitialGoals = [];
+                state.drawnBuyGoals = [];
+                state.buyGoalsDrawn = false;
+                state.gameStarted = false;
+                state.routeOwners = {};
+                els.jsonFile.value = '';
+                els.jsonError.textContent = '';
+                els.numPlayers.value = 3;
+                els.initialGoals.value = 3;
+                els.minKeep.value = 2;
+                renderPlayerNameInputs();
+                showScreen('screen-setup');
+            }
+
+            els.numPlayers.addEventListener('input', renderPlayerNameInputs);
+            els.jsonFile.addEventListener('change', handleJSON);
+            els.btnStart.addEventListener('click', () => startGame(true));
+            els.btnConfirmInitial.addEventListener('click', confirmInitialSelection);
+            els.btnNextPlayer.addEventListener('click', startInitialSelection);
+            els.btnBuyGoals.addEventListener('click', openBuyModal);
+            els.btnCancelBuy.addEventListener('click', closeBuyModal);
+            els.btnConfirmBuy.addEventListener('click', confirmBuy);
+            els.btnExportJSON.addEventListener('click', exportJSON);
+            els.btnFinishGame.addEventListener('click', finishGame);
+            els.btnNewGame.addEventListener('click', newGame);
+            els.routeSearch.addEventListener('input', renderRoutesTable);
+
+            renderPlayerNameInputs();
+            loadRoutesFromGitHub(); // Carrega automaticamente as rotas
+        })();
     </script>
 </body>
 </html>
