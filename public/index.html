@@ -768,24 +768,24 @@
 function loadRoutesFromGitHub() {
     fetch('/rotas.csv')
         .then(response => {
-            console.log('Status:', response.status);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.text();
         })
         .then(data => {
-            console.log('Arquivo carregado com sucesso');
-            console.log('Primeiras 200 caracteres:', data.substring(0, 200));
             try {
-                parseCSV(data);
-                console.log('CSV parseado com sucesso');
+                const rows = parseCSV(data);
+                const { boardRoutes, ticketsPool } = splitRoutes(rows);
+                state.boardRoutes = boardRoutes;
+                state.ticketsPool = shuffle(ticketsPool);
+                console.log(`Rotas carregadas: ${boardRoutes.length} rotas, ${ticketsPool.length} metas`);
             } catch (error) {
                 console.error('Erro ao fazer parse do CSV:', error);
-                alert('Erro ao processar arquivo de rotas. Por favor, faça upload manualmente.');
+                els.jsonError.textContent = 'Erro ao processar rotas.csv: ' + error.message;
             }
         })
         .catch(error => {
             console.error('Erro ao carregar rotas.csv:', error);
-            alert('Erro ao carregar arquivo de rotas. Por favor, faça upload manualmente.');
+            els.jsonError.textContent = 'Não foi possível carregar rotas.csv automaticamente (é preciso servir o site via HTTP, não abrir o arquivo direto). Você pode importar um JSON de partida salvo anteriormente.';
         });
 }
             
