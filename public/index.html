@@ -766,7 +766,6 @@
             // *** NOVA FUNÇÃO ***
             // Substitua [USUARIO] e [REPOSITORIO] pelos seus dados
 function loadRoutesFromGitHub() {
-    // Tente primeiro sem prefixo (Vercel serve /public como raiz)
     fetch('/rotas.csv')
         .then(response => {
             console.log('Status:', response.status);
@@ -775,13 +774,21 @@ function loadRoutesFromGitHub() {
         })
         .then(data => {
             console.log('Arquivo carregado com sucesso');
-            parseCSV(data);
+            console.log('Primeiras 200 caracteres:', data.substring(0, 200));
+            try {
+                parseCSV(data);
+                console.log('CSV parseado com sucesso');
+            } catch (error) {
+                console.error('Erro ao fazer parse do CSV:', error);
+                alert('Erro ao processar arquivo de rotas. Por favor, faça upload manualmente.');
+            }
         })
         .catch(error => {
             console.error('Erro ao carregar rotas.csv:', error);
             alert('Erro ao carregar arquivo de rotas. Por favor, faça upload manualmente.');
         });
 }
+            
             async function handleJSON() {
                 els.jsonError.textContent = '';
                 const file = els.jsonFile.files[0];
