@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket To Ride Companion</title>
+    <title>Ticket to Ride Brasil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ultra&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -58,10 +58,18 @@
         h1 {
             text-align: center;
             font-size: 1.9rem;
-            margin-top: 8px;
-            padding-bottom: 18px;
             color: var(--primary);
             text-shadow: 1px 1px 0 rgba(250, 244, 227, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            margin: -16px -16px 16px;
+            padding: 20px 16px 16px;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 100% 0%, rgba(184, 118, 58, 0.08), transparent 55%),
+                repeating-linear-gradient(0deg, rgba(43, 35, 24, 0.025) 0px, rgba(43, 35, 24, 0.025) 1px, transparent 1px, transparent 3px);
+            box-shadow: 0 6px 12px -6px rgba(31, 58, 53, 0.35);
         }
 
         h2 {
@@ -583,7 +591,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🚂 Ticket To Ride Companion</h1>
+        <h1>🚂 Ticket to Ride Brasil</h1>
 
         <!-- TELA 1: SETUP -->
         <div id="screen-setup" class="screen active">
@@ -1491,6 +1499,7 @@
                 els.minKeep.value = 2;
                 renderPlayerNameInputs();
                 showScreen('screen-setup');
+                loadRoutesFromGitHub();
             }
 
             els.numPlayers.addEventListener('input', renderPlayerNameInputs);
