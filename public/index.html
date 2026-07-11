@@ -766,10 +766,10 @@
             // *** NOVA FUNÇÃO ***
             // Substitua [USUARIO] e [REPOSITORIO] pelos seus dados
 function loadRoutesFromGitHub() {
-    fetch('rotas.csv')
+    // Tente primeiro sem prefixo (Vercel serve /public como raiz)
+    fetch('/rotas.csv')
         .then(response => {
             console.log('Status:', response.status);
-            console.log('URL:', response.url);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.text();
         })
