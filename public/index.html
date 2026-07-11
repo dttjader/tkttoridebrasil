@@ -1,669 +1,268 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ticket to Ride Companion</title>
-  <style>
-    :root {
-      --bg: #1b1f2a;
-      --panel: #262c3a;
-      --panel-2: #2f3647;
-      --accent: #d9a441;
-      --accent-2: #e8c468;
-      --ok: #4caf50;
-      --warn: #ff9800;
-      --err: #ef5350;
-      --text: #e8eaf0;
-      --muted: #9aa3b2;
-      --border: #3a4256;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket to Ride Companion</title>
+    <style>
+        :root {
+            --primary: #8b0000;
+            --secondary: #f4e4bc;
+            --accent: #daa520;
+            --text: #333;
+            --success: #28a745;
+            --error: #dc3545;
+        }
 
-    * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--secondary);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 2px solid var(--primary);
+        }
 
-    header {
-      background: linear-gradient(135deg, #20242f, #2a3142);
-      border-bottom: 2px solid var(--accent);
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      color: var(--accent-2);
-      letter-spacing: 0.5px;
-    }
+        .status-bar {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
 
-    header .subtitle {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 2px;
-    }
+        .status-success { background-color: #d4edda; color: var(--success); border: 1px solid #c3e6cb; display: block; }
+        .status-error { background-color: #f8d7da; color: var(--error); border: 1px solid #f5c6cb; display: block; }
+        .status-loading { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; display: block; }
 
-    .status-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--muted);
-    }
+        input[type="file"] {
+            padding: 10px;
+            border: 1px dashed var(--primary);
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-    .status-pill .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--muted);
-      box-shadow: 0 0 0 0 rgba(0,0,0,0);
-    }
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
 
-    .status-pill.loading { color: var(--warn); border-color: var(--warn); }
-    .status-pill.loading .dot { background: var(--warn); animation: pulse 1s infinite; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
 
-    .status-pill.success { color: var(--ok); border-color: var(--ok); }
-    .status-pill.success .dot { background: var(--ok); }
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
 
-    .status-pill.error { color: var(--err); border-color: var(--err); }
-    .status-pill.error .dot { background: var(--err); }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
 
-    .status-pill.auto { background: rgba(76,175,80,0.12); }
-    .status-pill.manual { background: rgba(217,164,65,0.12); }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #f1f1f1; }
 
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255,152,0,0.6); }
-      70% { box-shadow: 0 0 0 8px rgba(255,152,0,0); }
-      100% { box-shadow: 0 0 0 0 rgba(255,152,0,0); }
-    }
-
-    .toolbar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 14px 24px;
-      background: var(--panel);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .btn {
-      background: var(--panel-2);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.15s ease;
-    }
-
-    .btn:hover { background: var(--accent); color: #1b1f2a; border-color: var(--accent); }
-    .btn.primary { background: var(--accent); color: #1b1f2a; border-color: var(--accent); font-weight: 600; }
-    .btn.primary:hover { background: var(--accent-2); }
-
-    .file-input { display: none; }
-
-    .search {
-      flex: 1;
-      min-width: 200px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 0.85rem;
-    }
-
-    .select {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 0.85rem;
-    }
-
-    main {
-      padding: 20px 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .stat-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-    }
-
-    .stat-card .label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .stat-card .value {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--accent-2);
-      margin-top: 4px;
-    }
-
-    .routes-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--panel);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-
-    .routes-table th, .routes-table td {
-      padding: 10px 12px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-    }
-
-    .routes-table th {
-      background: var(--panel-2);
-      color: var(--muted);
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.72rem;
-      letter-spacing: 0.5px;
-    }
-
-    .routes-table tr:hover { background: var(--panel-2); }
-    .routes-table tr.completed { opacity: 0.55; }
-    .routes-table tr.completed td:first-child { text-decoration: line-through; }
-
-    .color-chip {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border-radius: 4px;
-      margin-right: 6px;
-      vertical-align: middle;
-      border: 1px solid rgba(0,0,0,0.3);
-    }
-
-    .points {
-      font-weight: 700;
-      color: var(--accent-2);
-    }
-
-    .empty {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-    }
-
-    .empty .icon { font-size: 3rem; margin-bottom: 12px; }
-
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      padding: 12px 18px;
-      border-radius: 8px;
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.25s ease;
-      pointer-events: none;
-      z-index: 1000;
-      max-width: 320px;
-    }
-
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.ok { border-color: var(--ok); }
-    .toast.err { border-color: var(--err); }
-    .toast.warn { border-color: var(--warn); }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: var(--muted);
-      font-size: 0.78rem;
-      border-top: 1px solid var(--border);
-      margin-top: 30px;
-    }
-
-    @media (max-width: 600px) {
-      header { flex-direction: column; align-items: flex-start; }
-      main { padding: 16px; }
-    }
-  </style>
+        .route-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 1px solid #999;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div>
-      <h1>🚂 Ticket to Ride Companion</h1>
-      <div class="subtitle">Controle de rotas, pontuação e progresso da partida</div>
-    </div>
-    <div class="status-bar">
-      <span id="csvStatus" class="status-pill loading">
-        <span class="dot"></span>
-        <span id="csvStatusText">Carregando rotas.csv…</span>
-      </span>
-      <span id="sourceStatus" class="status-pill" style="display:none;">
-        <span class="dot"></span>
-        <span id="sourceStatusText"></span>
-      </span>
-    </div>
-  </header>
 
-  <div class="toolbar">
-    <button class="btn primary" id="uploadBtn">📁 Carregar CSV</button>
-    <input type="file" id="fileInput" class="file-input" accept=".csv,text/csv" />
-    <button class="btn" id="reloadBtn">🔄 Recarregar</button>
-    <input type="text" id="searchInput" class="search" placeholder="Buscar por cidade ou rota…" />
-    <select id="filterSelect" class="select">
-      <option value="all">Todas as rotas</option>
-      <option value="pending">Pendentes</option>
-      <option value="completed">Concluídas</option>
-    </select>
-    <button class="btn" id="clearCompletedBtn">🧹 Limpar concluídas</button>
-  </div>
+    <div class="container">
+        <h1>Ticket to Ride Companion</h1>
 
-  <main>
-    <div class="stats">
-      <div class="stat-card">
-        <div class="label">Total de rotas</div>
-        <div class="value" id="statTotal">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">Rotas concluídas</div>
-        <div class="value" id="statCompleted">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">Pontos ganhos</div>
-        <div class="value" id="statPoints">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">Pontos pendentes</div>
-        <div class="value" id="statPending">0</div>
-      </div>
-    </div>
+        <div id="status" class="status-bar">Iniciando...</div>
 
-    <div id="tableContainer">
-      <div class="empty" id="emptyState">
-        <div class="icon">🗺️</div>
-        <div>Nenhuma rota carregada.</div>
-        <div style="margin-top:8px;font-size:0.8rem;">
-          Tentando carregar <code>public/rotas.csv</code> automaticamente…<br>
-          Se falhar, use o botão “Carregar CSV” para selecionar o arquivo manualmente.
+        <div class="controls">
+            <label for="csvFile">Upload Manual (Fallback):</label>
+            <input type="file" id="csvFile" accept=".csv">
         </div>
-      </div>
-      <table class="routes-table" id="routesTable" style="display:none;">
-        <thead>
-          <tr>
-            <th>✓</th>
-            <th>De</th>
-            <th>Para</th>
-            <th>Cor</th>
-            <th>Tamanho</th>
-            <th>Pontos</th>
-            <th>Ação</th>
-          </tr>
-        </thead>
-        <tbody id="routesBody"></tbody>
-      </table>
+
+        <input type="text" id="searchInput" class="search-box" placeholder="Buscar por cidade ou cor...">
+
+        <div id="tableContainer">
+            <table id="routesTable">
+                <thead>
+                    <tr>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Cor</th>
+                        <th>Tamanho</th>
+                        <th>Pontos</th>
+                    </tr>
+                </thead>
+                <tbody id="routesBody">
+                    <!-- Dados serão inseridos aqui -->
+                </tbody>
+            </table>
+        </div>
     </div>
-  </main>
 
-  <footer>
-    Ticket to Ride Companion • Dados locais no navegador • CSV em public/rotas.csv
-  </footer>
+    <script>
+        let allRoutes = [];
 
-  <div class="toast" id="toast"></div>
+        // 1. Função para carregar CSV automaticamente ao iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            loadRoutesFromServer();
+        });
 
-  <script>
-    (function () {
-      'use strict';
+        // 2. Carregar do Vercel (/rotas.csv)
+        async function loadRoutesFromServer() {
+            const statusDiv = document.getElementById('status');
+            showStatus('Carregando rotas do servidor...', 'loading');
 
-      const AUTO_CSV_URL = 'public/rotas.csv';
+            try {
+                const response = await fetch('/rotas.csv');
+                
+                if (!response.ok) {
+                    throw new Error(`Erro ao carregar arquivo: ${response.status} ${response.statusText}`);
+                }
 
-      const state = {
-        routes: [],
-        filter: 'all',
-        search: '',
-        source: null, // 'auto' | 'manual' | null
-      };
-
-      const els = {
-        csvStatus: document.getElementById('csvStatus'),
-        csvStatusText: document.getElementById('csvStatusText'),
-        sourceStatus: document.getElementById('sourceStatus'),
-        sourceStatusText: document.getElementById('sourceStatusText'),
-        uploadBtn: document.getElementById('uploadBtn'),
-        fileInput: document.getElementById('fileInput'),
-        reloadBtn: document.getElementById('reloadBtn'),
-        searchInput: document.getElementById('searchInput'),
-        filterSelect: document.getElementById('filterSelect'),
-        clearCompletedBtn: document.getElementById('clearCompletedBtn'),
-        routesTable: document.getElementById('routesTable'),
-        routesBody: document.getElementById('routesBody'),
-        emptyState: document.getElementById('emptyState'),
-        statTotal: document.getElementById('statTotal'),
-        statCompleted: document.getElementById('statCompleted'),
-        statPoints: document.getElementById('statPoints'),
-        statPending: document.getElementById('statPending'),
-        toast: document.getElementById('toast'),
-      };
-
-      const COLOR_MAP = {
-        red: '#e53935', blue: '#1e88e5', green: '#43a047',
-        yellow: '#fdd835', black: '#212121', white: '#fafafa',
-        orange: '#fb8c00', purple: '#8e24aa', pink: '#ec407a',
-        gray: '#9e9e9e', grey: '#9e9e9e', neutral: '#bdbdbd',
-        wild: '#d9a441', locomotive: '#d9a441', any: '#d9a441',
-      };
-
-      function colorChip(color) {
-        const c = (color || '').trim().toLowerCase();
-        const hex = COLOR_MAP[c] || '#888';
-        return '<span class="color-chip" style="background:' + hex + '"></span>' + escapeHtml(color || '-');
-      }
-
-      function escapeHtml(str) {
-        return String(str == null ? '' : str)
-          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-      }
-
-      function showToast(msg, type) {
-        els.toast.textContent = msg;
-        els.toast.className = 'toast show ' + (type || '');
-        clearTimeout(showToast._t);
-        showToast._t = setTimeout(function () {
-          els.toast.classList.remove('show');
-        }, 3200);
-      }
-
-      function setStatus(stateName, text) {
-        els.csvStatus.className = 'status-pill ' + stateName;
-        els.csvStatusText.textContent = text;
-      }
-
-      function setSource(source) {
-        state.source = source;
-        if (source === 'auto') {
-          els.sourceStatus.style.display = 'inline-flex';
-          els.sourceStatus.className = 'status-pill success auto';
-          els.sourceStatusText.textContent = 'Fonte: automática (public/rotas.csv)';
-        } else if (source === 'manual') {
-          els.sourceStatus.style.display = 'inline-flex';
-          els.sourceStatus.className = 'status-pill manual';
-          els.sourceStatusText.textContent = 'Fonte: upload manual';
-        } else {
-          els.sourceStatus.style.display = 'none';
-        }
-      }
-
-      function parseCSV(text) {
-        const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
-        const result = [];
-        if (!lines.length) return result;
-
-        const splitLine = function (line) {
-          const out = [];
-          let cur = '';
-          let inQuotes = false;
-          for (let i = 0; i < line.length; i++) {
-            const ch = line[i];
-            if (ch === '"') {
-              if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
-              else { inQuotes = !inQuotes; }
-            } else if (ch === ',' && !inQuotes) {
-              out.push(cur); cur = '';
-            } else { cur += ch; }
+                const csvData = await response.text();
+                processCSV(csvData);
+                showStatus('Rotas carregadas com sucesso!', 'success');
+            } catch (error) {
+                console.error('Erro no carregamento automático:', error);
+                showStatus('Arquivo rotas.csv não encontrado no servidor. Use o upload manual.', 'error');
             }
-          out.push(cur);
-          return out.map(function (s) { return s.trim(); });
-        };
-
-        const header = splitLine(lines[0]).map(function (h) { return h.toLowerCase(); });
-        const idx = function (names) {
-          for (let i = 0; i < names.length; i++) {
-            const p = header.indexOf(names[i]);
-            if (p !== -1) return p;
-          }
-          return -1;
-        };
-
-        const iFrom = idx(['from', 'de', 'origem', 'city1', 'cidade1', 'a']);
-        const iTo = idx(['to', 'para', 'destino', 'city2', 'cidade2', 'b']);
-        const iColor = idx(['color', 'cor', 'colour']);
-        const iLength = idx(['length', 'tamanho', 'size', 'trens', 'trains']);
-        const iPoints = idx(['points', 'pontos', 'score', 'valor']);
-        const iId = idx(['id', 'id_rota']);
-
-        for (let li = 1; li < lines.length; li++) {
-          const line = lines[li];
-          if (!line.trim()) continue;
-          const cols = splitLine(line);
-          if (cols.length < 2) continue;
-
-          const from = iFrom !== -1 ? cols[iFrom] : cols[0];
-          const to = iTo !== -1 ? cols[iTo] : cols[1];
-          const color = iColor !== -1 ? cols[iColor] : (cols[2] || '');
-          const length = iLength !== -1 ? cols[iLength] : (cols[3] || '');
-          let points = iPoints !== -1 ? cols[iPoints] : '';
-          const id = iId !== -1 ? cols[iId] : String(li);
-
-          if (!points) {
-            const len = parseInt(length, 10);
-            points = isNaN(len) ? '' : String(pointsForLength(len));
-          }
-
-          result.push({
-            id: id || String(li),
-            from: from || '',
-            to: to || '',
-            color: color || '',
-            length: length || '',
-            points: points || '',
-            completed: false,
-          });
-        }
-        return result;
-      }
-
-      function pointsForLength(len) {
-        const table = { 1: 1, 2: 2, 3: 4, 4: 7, 5: 10, 6: 15, 8: 21, 9: 27 };
-        return table[len] != null ? table[len] : (len * 2);
-      }
-
-      function loadRoutes(routes, source) {
-        state.routes = routes;
-        setSource(source);
-        render();
-        if (routes.length) {
-          setStatus('success', routes.length + ' rotas carregadas');
-          showToast(source === 'auto'
-            ? 'rotas.csv carregado automaticamente (' + routes.length + ' rotas)'
-            : 'CSV carregado manualmente (' + routes.length + ' rotas)', 'ok');
-        } else {
-          setStatus('error', 'CSV vazio ou inválido');
-          showToast('CSV carregado mas nenhuma rota encontrada.', 'warn');
-        }
-      }
-
-      function autoLoadCSV() {
-        setStatus('loading', 'Carregando rotas.csv…');
-        fetch(AUTO_CSV_URL, { cache: 'no-store' })
-          .then(function (res) {
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            return res.text();
-          })
-          .then(function (text) {
-            const routes = parseCSV(text);
-            loadRoutes(routes, 'auto');
-          })
-          .catch(function (err) {
-            setStatus('error', 'Não foi possível carregar automaticamente');
-            setSource(null);
-            showToast('Falha ao carregar public/rotas.csv: ' + err.message + '. Use o upload manual.', 'err');
-            render();
-          });
-      }
-
-      function handleManualFile(file) {
-        if (!file) return;
-        setStatus('loading', 'Lendo arquivo…');
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          try {
-            const routes = parseCSV(e.target.result);
-            loadRoutes(routes, 'manual');
-          } catch (err) {
-            setStatus('error', 'Erro ao processar CSV');
-            showToast('Erro ao processar CSV: ' + err.message, 'err');
-          }
-        };
-        reader.onerror = function () {
-          setStatus('error', 'Erro ao ler arquivo');
-          showToast('Não foi possível ler o arquivo.', 'err');
-        };
-        reader.readAsText(file);
-      }
-
-      function getFilteredRoutes() {
-        const q = state.search.trim().toLowerCase();
-        return state.routes.filter(function (r) {
-          if (state.filter === 'pending' && r.completed) return false;
-          if (state.filter === 'completed' && !r.completed) return false;
-          if (q) {
-            const hay = (r.from + ' ' + r.to + ' ' + r.color).toLowerCase();
-            if (hay.indexOf(q) === -1) return false;
-          }
-          return true;
-        });
-      }
-
-      function render() {
-        const filtered = getFilteredRoutes();
-        const total = state.routes.length;
-        const completed = state.routes.filter(function (r) { return r.completed; }).length;
-        const pts = state.routes.reduce(function (acc, r) {
-          return acc + (r.completed ? (parseInt(r.points, 10) || 0) : 0);
-        }, 0);
-        const pending = state.routes.reduce(function (acc, r) {
-          return acc + (!r.completed ? (parseInt(r.points, 10) || 0) : 0);
-        }, 0);
-
-        els.statTotal.textContent = total;
-        els.statCompleted.textContent = completed;
-        els.statPoints.textContent = pts;
-        els.statPending.textContent = pending;
-
-        if (!state.routes.length) {
-          els.routesTable.style.display = 'none';
-          els.emptyState.style.display = 'block';
-          return;
         }
 
-        els.routesTable.style.display = 'table';
-        els.emptyState.style.display = 'none';
+        // 3. Tratamento de Upload Manual (Fallback)
+        document.getElementById('csvFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
 
-        els.routesBody.innerHTML = filtered.map(function (r) {
-          return '<tr class="' + (r.completed ? 'completed' : '') + '" data-id="' + escapeHtml(r.id) + '">' +
-            '<td><input type="checkbox" class="complete-cb" data-id="' + escapeHtml(r.id) + '" ' + (r.completed ? 'checked' : '') + '></td>' +
-            '<td>' + escapeHtml(r.from) + '</td>' +
-            '<td>' + escapeHtml(r.to) + '</td>' +
-            '<td>' + colorChip(r.color) + '</td>' +
-            '<td>' + escapeHtml(r.length) + '</td>' +
-            '<td class="points">' + escapeHtml(r.points) + '</td>' +
-            '<td><button class="btn toggle-btn" data-id="' + escapeHtml(r.id) + '">' +
-              (r.completed ? '↩ Reabrir' : '✓ Concluir') + '</button></td>' +
-            '</tr>';
-        }).join('');
-
-        els.routesBody.querySelectorAll('.complete-cb').forEach(function (cb) {
-          cb.addEventListener('change', function () {
-            toggleRoute(cb.getAttribute('data-id'));
-          });
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                processCSV(e.target.result);
+                showStatus('Arquivo manual carregado com sucesso!', 'success');
+            };
+            reader.onerror = () => showStatus('Erro ao ler o arquivo manual.', 'error');
+            reader.readAsText(file);
         });
-        els.routesBody.querySelectorAll('.toggle-btn').forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            toggleRoute(btn.getAttribute('data-id'));
-          });
+
+        // 4. Processamento dos dados CSV
+        function processCSV(csvText) {
+            const lines = csvText.split(/\r?\n/);
+            const result = [];
+            
+            // Assume que a primeira linha é o cabeçalho: origem,destino,cor,tamanho,pontos
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                
+                const columns = lines[i].split(',');
+                if (columns.length >= 5) {
+                    result.push({
+                        origem: columns[0].trim(),
+                        destino: columns[1].trim(),
+                        cor: columns[2].trim(),
+                        tamanho: columns[3].trim(),
+                        pontos: columns[4].trim()
+                    });
+                }
+            }
+            
+            allRoutes = result;
+            renderTable(allRoutes);
+        }
+
+        // 5. Renderização da Tabela
+        function renderTable(routes) {
+            const tbody = document.getElementById('routesBody');
+            tbody.innerHTML = '';
+
+            routes.forEach(route => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${route.origem}</td>
+                    <td>${route.destino}</td>
+                    <td><span class="route-color" style="background-color: ${translateColor(route.cor)}"></span>${route.cor}</td>
+                    <td>${route.tamanho}</td>
+                    <td>${route.pontos}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 6. Filtro de Busca
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const filtered = allRoutes.filter(r => 
+                r.origem.toLowerCase().includes(term) || 
+                r.destino.toLowerCase().includes(term) || 
+                r.cor.toLowerCase().includes(term)
+            );
+            renderTable(filtered);
         });
-      }
 
-      function toggleRoute(id) {
-        const r = state.routes.find(function (x) { return String(x.id) === String(id); });
-        if (!r) return;
-        r.completed = !r.completed;
-        render();
-      }
+        // Helpers
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = 'status-bar status-' + type;
+        }
 
-      function clearCompleted() {
-        let changed = false;
-        state.routes.forEach(function (r) {
-          if (r.completed) { r.completed = false; changed = true; }
-        });
-        if (changed) showToast('Rotas concluídas reabertas.', 'warn');
-        render();
-      }
-
-      // Eventos
-      els.uploadBtn.addEventListener('click', function () { els.fileInput.click(); });
-      els.fileInput.addEventListener('change', function (e) {
-        const file = e.target.files && e.target.files[0];
-        if (file) handleManualFile(file);
-        els.fileInput.value = '';
-      });
-      els.reloadBtn.addEventListener('click', autoLoadCSV);
-      els.searchInput.addEventListener('input', function (e) {
-        state.search = e.target.value;
-        render();
-      });
-      els.filterSelect.addEventListener('change', function (e) {
-        state.filter = e.target.value;
-        render();
-      });
-      els.clearCompletedBtn.addEventListener('click', clearCompleted);
-
-      // Inicialização: carrega automaticamente public/rotas.csv
-      autoLoadCSV();
-    })();
-  </script>
+        function translateColor(colorName) {
+            const colors = {
+                'Vermelho': '#e31a1c',
+                'Azul': '#1f78b4',
+                'Verde': '#33a02c',
+                'Amarelo': '#ffd700',
+                'Preto': '#333333',
+                'Branco': '#ffffff',
+                'Rosa': '#fb9a99',
+                'Laranja': '#ff7f00',
+                'Cinza': '#a9a9a9',
+                'Coringa': 'linear-gradient(45deg, red, blue, green, yellow)'
+            };
+            return colors[colorName] || '#ccc';
+        }
+    </script>
 </body>
 </html>
