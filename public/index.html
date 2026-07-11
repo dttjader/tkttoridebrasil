@@ -765,27 +765,23 @@
 
             // *** NOVA FUNÇÃO ***
             // Substitua [USUARIO] e [REPOSITORIO] pelos seus dados
-            async function loadRoutesFromGitHub() {
-                const url = 'rotas.csv';
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const text = await response.text();
-                    const rows = parseCSV(text);
-                    const { boardRoutes, ticketsPool } = splitRoutes(rows);
-                    if (boardRoutes.length === 0 && ticketsPool.length === 0) {
-                        throw new Error('Nenhuma rota válida encontrada no arquivo.');
-                    }
-                    state.boardRoutes = boardRoutes;
-                    state.ticketsPool = shuffle(ticketsPool);
-                    alert(`Rotas carregadas do GitHub: ${boardRoutes.length} rotas de tabuleiro e ${state.ticketsPool.length} metas.`);
-                } catch (err) {
-                    alert('Erro ao carregar rotas do GitHub: ' + err.message);
-                }
-            }
-
+function loadRoutesFromGitHub() {
+    fetch('rotas.csv')
+        .then(response => {
+            console.log('Status:', response.status);
+            console.log('URL:', response.url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.text();
+        })
+        .then(data => {
+            console.log('Arquivo carregado com sucesso');
+            parseCSV(data);
+        })
+        .catch(error => {
+            console.error('Erro ao carregar rotas.csv:', error);
+            alert('Erro ao carregar arquivo de rotas. Por favor, faça upload manualmente.');
+        });
+}
             async function handleJSON() {
                 els.jsonError.textContent = '';
                 const file = els.jsonFile.files[0];
