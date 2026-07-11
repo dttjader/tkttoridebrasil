@@ -4,21 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket To Ride Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ultra&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a237e;
-            --primary-light: #3949ab;
-            --accent: #ff6f00;
-            --bg: #f5f7fa;
-            --card: #ffffff;
-            --text: #263238;
-            --text-muted: #607d8b;
-            --border: #cfd8dc;
-            --success: #2e7d32;
-            --danger: #c62828;
-            --warning: #f9a825;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
-            --radius: 12px;
+            /* Bilhete de trem vintage: verde-pinho de vagão + latão + papel envelhecido */
+            --primary: #1f3a35;
+            --primary-light: #345650;
+            --accent: #b8763a;
+            --accent-dark: #8a5726;
+            --bg: #e9dcb8;
+            --card: #faf4e3;
+            --text: #2b2318;
+            --text-muted: #7c6b4d;
+            --border: #c9b788;
+            --success: #3f6b4a;
+            --danger: #9c3b2e;
+            --warning: #b8862e;
+            --shadow: 0 6px 16px rgba(31, 58, 53, 0.18);
+            --radius: 6px;
+            --font-display: 'Ultra', 'Georgia', serif;
+            --font-body: 'Archivo', 'Segoe UI', sans-serif;
+            --font-mono: 'Space Mono', 'Courier New', monospace;
         }
 
         * {
@@ -28,8 +36,11 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
+            font-family: var(--font-body);
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 100% 0%, rgba(184, 118, 58, 0.08), transparent 55%),
+                repeating-linear-gradient(0deg, rgba(43, 35, 24, 0.025) 0px, rgba(43, 35, 24, 0.025) 1px, transparent 1px, transparent 3px);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
@@ -37,14 +48,30 @@
         }
 
         h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 400;
             color: var(--primary);
+            letter-spacing: 0.03em;
             margin-bottom: 16px;
         }
 
         h1 {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.9rem;
             margin-top: 8px;
+            padding-bottom: 18px;
+            color: var(--primary);
+            text-shadow: 1px 1px 0 rgba(250, 244, 227, 0.4);
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--border);
+        }
+
+        h3 {
+            font-size: 1rem;
         }
 
         .container {
@@ -52,13 +79,51 @@
             margin: 0 auto;
         }
 
+        .container > h1 {
+            position: relative;
+        }
+
+        .container > h1::after {
+            content: "";
+            display: block;
+            width: 220px;
+            max-width: 60%;
+            height: 0;
+            margin: 14px auto 0;
+            border-bottom: 3px double var(--accent);
+        }
+
         .card {
+            position: relative;
             background: var(--card);
+            background-image:
+                linear-gradient(rgba(43, 35, 24, 0.015) 1px, transparent 1px);
+            background-size: 100% 28px;
+            border: 1px solid var(--border);
+            border-top: 5px solid var(--accent);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 24px;
+            padding: 30px 24px 24px;
             margin-bottom: 24px;
         }
+
+        /* Furos de perfuração de bilhete, encaixados no friso de latão */
+        .card::before,
+        .card::after {
+            content: "";
+            position: absolute;
+            top: -1px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-top: none;
+            transform: translateY(-50%);
+        }
+
+        .card::before { left: 22px; }
+        .card::after { right: 22px; }
 
         .screen {
             display: none;
@@ -72,7 +137,10 @@
             display: block;
             margin-bottom: 6px;
             font-weight: 600;
-            color: var(--text);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
         }
 
         input[type="text"],
@@ -81,17 +149,20 @@
         select {
             width: 100%;
             padding: 12px;
+            background: #fffdf7;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 4px;
+            font-family: var(--font-body);
             font-size: 1rem;
+            color: var(--text);
             margin-bottom: 16px;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         input:focus, select:focus {
             outline: none;
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.15);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(184, 118, 58, 0.18);
         }
 
         .row {
@@ -112,10 +183,14 @@
             gap: 8px;
             padding: 12px 20px;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             cursor: pointer;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 2px 0 rgba(0, 0, 0, 0.18);
             transition: transform 0.1s, opacity 0.2s, background 0.2s;
         }
 
@@ -124,28 +199,33 @@
             opacity: 0.95;
         }
 
+        .btn:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+        }
+
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
-        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary { background: var(--primary); color: #f4ecd8; }
         .btn-primary:hover:not(:disabled) { background: var(--primary-light); }
 
-        .btn-accent { background: var(--accent); color: #fff; }
-        .btn-accent:hover:not(:disabled) { background: #e65100; }
+        .btn-accent { background: var(--accent); color: #fff8ea; }
+        .btn-accent:hover:not(:disabled) { background: var(--accent-dark); }
 
-        .btn-success { background: var(--success); color: #fff; }
-        .btn-success:hover:not(:disabled) { background: #1b5e20; }
+        .btn-success { background: var(--success); color: #f4ecd8; }
+        .btn-success:hover:not(:disabled) { background: #2f5439; }
 
-        .btn-danger { background: var(--danger); color: #fff; }
-        .btn-danger:hover:not(:disabled) { background: #b71c1c; }
+        .btn-danger { background: var(--danger); color: #f4ecd8; }
+        .btn-danger:hover:not(:disabled) { background: #7e2f24; }
 
-        .btn-warning { background: var(--warning); color: #fff; }
-        .btn-warning:hover:not(:disabled) { background: #f57f17; }
+        .btn-warning { background: var(--warning); color: #2b2318; }
+        .btn-warning:hover:not(:disabled) { background: #9c7126; }
 
-        .btn-secondary { background: var(--text-muted); color: #fff; }
-        .btn-secondary:hover:not(:disabled) { background: #455a64; }
+        .btn-secondary { background: var(--text-muted); color: #f4ecd8; }
+        .btn-secondary:hover:not(:disabled) { background: #5f5138; }
 
         .actions {
             display: flex;
@@ -164,8 +244,8 @@
             overflow-y: auto;
             padding: 12px;
             border: 1px solid var(--border);
-            border-radius: 8px;
-            background: #fafafa;
+            border-radius: 4px;
+            background: #f1e6c8;
         }
 
         .checkbox-item {
@@ -173,33 +253,38 @@
             align-items: center;
             gap: 10px;
             padding: 10px 12px;
-            background: #fff;
-            border-radius: 8px;
+            background: #fffdf7;
+            border-radius: 4px;
             border: 1px solid var(--border);
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, border-color 0.2s;
         }
 
         .checkbox-item:hover {
-            background: #e8eaf6;
+            background: #fbf0d6;
+            border-color: var(--accent);
         }
 
         .checkbox-item input[type="checkbox"] {
             width: 20px;
             height: 20px;
-            accent-color: var(--primary);
+            accent-color: var(--accent);
             cursor: pointer;
         }
 
         .checkbox-item label {
             margin: 0;
             font-weight: 500;
+            text-transform: none;
+            letter-spacing: normal;
+            color: var(--text);
             cursor: pointer;
             flex: 1;
         }
 
         .route-info {
-            font-size: 0.9rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
             color: var(--text-muted);
             margin-left: auto;
         }
@@ -207,48 +292,63 @@
         .table-wrapper {
             max-height: 400px;
             overflow-y: auto;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            border: 1px solid var(--primary);
+            border-radius: 4px;
             margin-top: 12px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: #fff;
+            background: #14201d;
         }
 
         th, td {
             padding: 12px 16px;
             text-align: left;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(233, 220, 184, 0.12);
+            font-family: var(--font-mono);
+            color: #e9dcb8;
         }
 
         th {
             background: var(--primary);
-            color: #fff;
-            font-weight: 600;
+            color: #d9a05c;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
             position: sticky;
             top: 0;
             z-index: 1;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        td:nth-child(3), td:nth-child(4) {
+            color: #d9a05c;
+            font-weight: 700;
         }
 
         tbody tr:hover {
-            background: #f5f7fa;
+            background: rgba(184, 118, 58, 0.12);
         }
 
         select.route-owner {
             width: 100%;
             padding: 8px;
-            border-radius: 6px;
+            border-radius: 4px;
             border: 1px solid var(--border);
-            font-size: 0.95rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            background: #fffdf7;
+            color: var(--text);
+            margin-bottom: 0;
         }
 
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(20, 32, 29, 0.72);
             display: none;
             align-items: center;
             justify-content: center;
@@ -261,15 +361,35 @@
         }
 
         .modal {
+            position: relative;
             background: var(--card);
+            border: 1px solid var(--border);
+            border-top: 5px solid var(--accent);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             width: 100%;
             max-width: 520px;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 24px;
+            padding: 30px 24px 24px;
         }
+
+        .modal::before,
+        .modal::after {
+            content: "";
+            position: absolute;
+            top: -1px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #14201d;
+            border: 1px solid var(--border);
+            border-top: none;
+            transform: translateY(-50%);
+        }
+
+        .modal::before { left: 22px; }
+        .modal::after { right: 22px; }
 
         .modal h3 {
             margin-top: 0;
@@ -277,7 +397,7 @@
 
         .error {
             color: var(--danger);
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 12px;
         }
 
@@ -293,13 +413,16 @@
         }
 
         .transition-panel h2 {
-            font-size: 2rem;
+            font-size: 1.6rem;
+            border-bottom: none;
         }
 
         .player-name-display {
-            font-size: 1.5rem;
+            font-family: var(--font-display);
+            font-size: 1.6rem;
             color: var(--accent);
-            font-weight: 700;
+            font-weight: 400;
+            letter-spacing: 0.04em;
             margin: 16px 0;
         }
 
@@ -311,9 +434,10 @@
 
         .score-player {
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            border-radius: 4px;
             padding: 16px;
-            background: #fff;
+            background: #fffdf7;
         }
 
         .score-header {
@@ -326,13 +450,14 @@
         }
 
         .score-value {
-            font-size: 1.4rem;
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary);
         }
 
         .toggle-goals {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             padding: 8px 12px;
         }
 
@@ -352,8 +477,8 @@
             align-items: center;
             gap: 10px;
             padding: 8px 12px;
-            background: #fafafa;
-            border-radius: 6px;
+            background: #f1e6c8;
+            border-radius: 4px;
             border: 1px solid var(--border);
         }
 
@@ -366,9 +491,14 @@
         .goal-row label {
             margin: 0;
             flex: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            font-weight: 500;
+            color: var(--text);
         }
 
         .goal-points {
+            font-family: var(--font-mono);
             font-weight: 700;
             color: var(--success);
         }
@@ -379,10 +509,15 @@
 
         .winner {
             text-align: center;
-            font-size: 1.8rem;
-            font-weight: 700;
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 400;
+            letter-spacing: 0.03em;
             color: var(--success);
+            padding: 14px 0;
             margin-bottom: 24px;
+            border-top: 3px double var(--accent);
+            border-bottom: 3px double var(--accent);
         }
 
         .status-bar {
@@ -393,9 +528,13 @@
             gap: 12px;
             margin-bottom: 16px;
             padding: 12px 16px;
-            background: #e8eaf6;
-            border-radius: 8px;
-            font-weight: 600;
+            background: var(--primary);
+            color: #e9dcb8;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.03em;
         }
 
         .route-owner-display {
@@ -404,15 +543,39 @@
         }
 
         .small-note {
-            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
             color: var(--text-muted);
             margin-top: 4px;
+        }
+
+        hr {
+            border: none !important;
+            border-top: 2px dashed var(--border) !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
         }
 
         @media (max-width: 600px) {
             .row { flex-direction: column; gap: 0; }
             .col { min-width: auto; }
-            h1 { font-size: 1.5rem; }
+            h1 { font-size: 1.4rem; }
             .actions { flex-direction: column; }
             .btn { width: 100%; }
         }
@@ -763,32 +926,29 @@
                 });
             }
 
-            // *** NOVA FUNÇÃO ***
-            // Substitua [USUARIO] e [REPOSITORIO] pelos seus dados
-function loadRoutesFromGitHub() {
-    fetch('/rotas.csv')
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.text();
-        })
-        .then(data => {
-            try {
-                const rows = parseCSV(data);
-                const { boardRoutes, ticketsPool } = splitRoutes(rows);
-                state.boardRoutes = boardRoutes;
-                state.ticketsPool = shuffle(ticketsPool);
-                console.log(`Rotas carregadas: ${boardRoutes.length} rotas, ${ticketsPool.length} metas`);
-            } catch (error) {
-                console.error('Erro ao fazer parse do CSV:', error);
-                els.jsonError.textContent = 'Erro ao processar rotas.csv: ' + error.message;
+            function loadRoutesFromGitHub() {
+                fetch('/rotas.csv')
+                    .then(response => {
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                        return response.text();
+                    })
+                    .then(data => {
+                        try {
+                            const rows = parseCSV(data);
+                            const { boardRoutes, ticketsPool } = splitRoutes(rows);
+                            state.boardRoutes = boardRoutes;
+                            state.ticketsPool = shuffle(ticketsPool);
+                        } catch (error) {
+                            console.error('Erro ao fazer parse do CSV:', error);
+                            els.jsonError.textContent = 'Erro ao processar rotas.csv: ' + error.message;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar rotas.csv:', error);
+                        els.jsonError.textContent = 'Não foi possível carregar rotas.csv automaticamente. Você pode importar um JSON de partida salvo anteriormente.';
+                    });
             }
-        })
-        .catch(error => {
-            console.error('Erro ao carregar rotas.csv:', error);
-            els.jsonError.textContent = 'Não foi possível carregar rotas.csv automaticamente (é preciso servir o site via HTTP, não abrir o arquivo direto). Você pode importar um JSON de partida salvo anteriormente.';
-        });
-}
-            
+
             async function handleJSON() {
                 els.jsonError.textContent = '';
                 const file = els.jsonFile.files[0];
@@ -1347,7 +1507,7 @@ function loadRoutesFromGitHub() {
             els.routeSearch.addEventListener('input', renderRoutesTable);
 
             renderPlayerNameInputs();
-            loadRoutesFromGitHub(); // Carrega automaticamente as rotas
+            loadRoutesFromGitHub();
         })();
     </script>
 </body>
