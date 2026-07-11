@@ -1,0 +1,19 @@
+{
+  "name": "ticket-to-ride-companion",
+  "version": "1.0.0",
+  "description": "Companion app for Ticket to Ride board game",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo \"Static project: no build step required\"",
+    "start": "vercel dev"
+  },
+  "keywords": [
+    "ticket-to-ride",
+    "board-game",
+    "companion",
+    "static"
+  ],
+  "author": "",
+  "license": "MIT"
+}
