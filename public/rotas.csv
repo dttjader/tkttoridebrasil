@@ -92,35 +92,30 @@ Foz do Iguaçu,Palmas,11,1
 Foz do Iguaçu,Porto Seguro,9,1
 
 Belém,Macapá,2,
-Belém,São Luís,3,1
+Belém,São Luís,3,
 Belém,Santarém,2,
-Belém,Palmas,3,1
-Macapá,Cayenne,2,
-Cayenne,Paramaribo,1,
-Paramaribo,Georgetown,1,
-Georgetown,Manaus,3,1
-Georgetown,Ciudad Bolívar,2,
+Belém,Palmas,3,
 Manaus,Santarém,2,
 Manaus,Boa Vista,2,
 Manaus,Porto Velho,2,
-Boa Vista,Macapá,3,1
-Boa Vista,Rio Branco,3,1
+Boa Vista,Macapá,3,
+Boa Vista,Rio Branco,3,
 Porto Velho,Rio Branco,2,
 Porto Velho,Cáceres,2,
 Rio Branco,Cáceres,2,
-Cáceres,Cuiabá,3,1
-Cáceres,Campo Grande,3,1
+Cáceres,Cuiabá,3,
+Cáceres,Campo Grande,3,
 Santarém,Marabá,2,
 Marabá,Imperatriz,2,
 Imperatriz,São Luís,2,
 Imperatriz,Palmas,2,
 São Luís,Teresina,2,
-Teresina,Fortaleza,3,1
+Teresina,Fortaleza,3,
 Teresina,Palmas,1,
-Palmas,Goiânia,3,1
+Palmas,Goiânia,3,
 Palmas,Brasília,1,
 Fortaleza,Natal,2,
-Fortaleza,Petrolina,3,1
+Fortaleza,Petrolina,3,
 Fortaleza,Juazeiro do Norte,2,
 Natal,João Pessoa,2,
 João Pessoa,Recife,1,
@@ -128,9 +123,9 @@ Recife,Maceió,2,
 Maceió,Aracaju,2,
 Aracaju,Salvador,2,
 Salvador,Ilhéus,2,
-Salvador,Belo Horizonte,3,1
-Salvador,Brasília,3,1
-Ilhéus,Vitória,3,1
+Salvador,Belo Horizonte,3,
+Salvador,Brasília,3,
+Ilhéus,Vitória,3,
 Vitória,Belo Horizonte,2,
 Vitória,Rio de Janeiro,2,
 Belo Horizonte,Rio de Janeiro,2,
@@ -141,7 +136,7 @@ Rio de Janeiro,São José dos Campos,2,
 São Paulo,Santos,1,
 São Paulo,São José dos Campos,1,
 São Paulo,Campinas,1,
-São Paulo,Brasília,3,1
+São Paulo,Brasília,3,
 São José dos Campos,Campinas,1,
 Campinas,Ribeirão Preto,2,
 Campinas,Curitiba,2,
@@ -154,20 +149,20 @@ Goiânia,Cuiabá,2,
 Brasília,Cuiabá,2,
 Cuiabá,Campo Grande,2,
 Campo Grande,Foz do Iguaçu,2,
-Campo Grande,Curitiba,3,1
+Campo Grande,Curitiba,3,
 Campo Grande,Londrina,2,
 Londrina,Curitiba,2,
 Curitiba,Florianópolis,1,
-Curitiba,Foz do Iguaçu,3,1
-Curitiba,Chapecó,3,1
-Florianópolis,Porto Alegre,2,1
+Curitiba,Foz do Iguaçu,3,
+Curitiba,Chapecó,3,
+Florianópolis,Porto Alegre,2,
 Foz do Iguaçu,Uruguaiana,2,
 Foz do Iguaçu,Assunção,1,
 Uruguaiana,Santana do Livramento,1,
 Uruguaiana,Passo Fundo,2,
 Santana do Livramento,Rivera (Uruguai),1,
 Rivera (Uruguai),Passo Fundo,2,
-Rivera (Uruguai),Montevidéu,3,1
+Rivera (Uruguai),Montevidéu,3,
 Passo Fundo,Chapecó,2,
 Passo Fundo,Porto Alegre,2,
 Chapecó,Porto Alegre,3,1
@@ -175,83 +170,32 @@ Porto Alegre,Pelotas,1,
 Porto Alegre,Bagé,2,
 Pelotas,Bagé,2,
 Bagé,Uruguaiana,1,
-Montevidéu,Buenos Aires,2,
-Buenos Aires,Rosário,2,
-Buenos Aires,Córdoba,3,1
-Buenos Aires,Assunção,2,
-Rosário,Córdoba,2,
-Córdoba,Mendoza,2,
-Córdoba,Santa Cruz,3,1
-Mendoza,Santiago,3,1
-Santiago,Valparaíso,1,
-Santiago,Antofagasta,2,
-Santiago,Salta,3,1
-Antofagasta,Arequipa,2,
-Arequipa,Cusco,1,
-Arequipa,La Paz,2,
-Cusco,Lima,1,
-Lima,Guayaquil,2,
-Lima,Quito,2,
-Lima,Bogotá,3,1
-Guayaquil,Quito,1,
-Quito,Cali,2,
-Quito,Bogotá,2,
-Cali,Medellín,1,
-Cali,Lima,3,1
-Medellín,Bogotá,1,
-Bogotá,Caracas,3,1
-Bogotá,Georgetown,3,1
-Caracas,Maracaibo,2,
-Maracaibo,Ciudad Guayana,2,
-Ciudad Guayana,Ciudad Bolívar,1,
-Ciudad Bolívar,Georgetown,2,
-Assunção,Santa Cruz,2,
-Assunção,Foz do Iguaçu,1,
-Santa Cruz,La Paz,1,
-Santa Cruz,Salta,2,
-La Paz,Sucre,1,
-La Paz,Cochabamba,1,
-Cochabamba,Sucre,1,
-Salta,Buenos Aires,3,1
 Juazeiro do Norte,Petrolina,1,
 Salvador,Ilhéus,2,
 Recife,João Pessoa,1,
 Manaus,Boa Vista,2,
 Porto Velho,Cáceres,2,
 Montevidéu,Santana do Livramento,2,
-Foz do Iguaçu,Buenos Aires,3,1
+Foz do Iguaçu,Buenos Aires,3,
 Belo Horizonte,Uberlândia,2,
-Santos,Curitiba,3,1
-Cuiabá,Rio Branco,3,1
-Brasília,Rio de Janeiro,3,1
+Santos,Curitiba,3,
+Cuiabá,Rio Branco,3,
+Brasília,Rio de Janeiro,3,
 Cáceres,Porto Velho,2,
 Santarém,Belém,2,
-Marabá,Belém,3,1
+Marabá,Belém,3,
 Imperatriz,Marabá,2,
-Cayenne,Macapá,2,
-Paramaribo,Cayenne,1,
-Bogotá,Medellín,1,
-Valparaíso,Santiago,1,
-Medellín,Cali,1,
-Rosário,Buenos Aires,2,
-Santa Cruz,Assunção,2,
-Sucre,La Paz,1,
-Cochabamba,Sucre,1,
-Mendoza,Córdoba,2,
-Arequipa,La Paz,2,
-Quito,Guayaquil,1,
-Cali,Quito,2,
-Rio de Janeiro,Belo Horizonte,2,1
-São Paulo,Belo Horizonte,2,1
-Vitória,Ilhéus,3,1
+Rio de Janeiro,Belo Horizonte,2,
+São Paulo,Belo Horizonte,2,
+Vitória,Ilhéus,3,
 Ilhéus,Salvador,2,
 Aracaju,Maceió,2,
 Maceió,Recife,2,
 João Pessoa,Natal,2,
 Natal,Fortaleza,2,
-Fortaleza,Teresina,3,1
+Fortaleza,Teresina,3,
 Petrolina,Juazeiro do Norte,1,
-Juazeiro do Norte,Imperatriz,3,1
+Juazeiro do Norte,Imperatriz,3,
 Santos,São Paulo,1,
 Campinas,São José dos Campos,1,
 Ribeirão Preto,Campinas,2,
@@ -263,45 +207,19 @@ Uruguaiana,Bagé,1,
 Santana do Livramento,Uruguaiana,1,
 Rivera (Uruguai),Santana do Livramento,1,
 Passo Fundo,Rivera (Uruguai),2,
-Cáceres,Campo Grande,3,1
+Cáceres,Campo Grande,3,
 Foz do Iguaçu,Campo Grande,2,
 Campo Grande,Londrina,2,
 Londrina,Curitiba,2,
 Florianópolis,Curitiba,1,
-Porto Alegre,Florianópolis,2,1
-Buenos Aires,Uruguaiana,3,1
-Buenos Aires,Foz do Iguaçu,3,1
-Assunção,Cuiabá,3,1
-Assunção,Buenos Aires,2,1
-Brasília,São Paulo,3,1
-Salvador,Brasília,3,1
+Porto Alegre,Florianópolis,2,
+Brasília,São Paulo,3,
+Salvador,Brasília,3,
 Goiânia,Uberlândia,1,
-Palmas,Goiânia,3,1
+Palmas,Goiânia,3,
 Teresina,Palmas,1,
-São Luís,Belém,3,1
-Belém,Palmas,3,1
+São Luís,Belém,3,
+Belém,Palmas,3,
 Santarém,Marabá,2,
 Marabá,Imperatriz,2,
 Porto Velho,Manaus,2,
-Boa Vista,Georgetown,2,
-Georgetown,Paramaribo,1,
-Ciudad Bolívar,Georgetown,2,
-Caracas,Maracaibo,2,
-Bogotá,Caracas,3,1
-Quito,Bogotá,2,
-Lima,Bogotá,3,1
-Lima,Cusco,1,
-Cusco,Arequipa,1,
-La Paz,Arequipa,2,
-Antofagasta,Santiago,2,
-Santiago,Mendoza,3,1
-Salta,Santiago,3,1
-Salta,Santa Cruz,2,
-Santa Cruz,La Paz,1,
-La Paz,Cochabamba,1,
-Sucre,Cochabamba,1,
-Córdoba,Rosário,2,
-Buenos Aires,Rosário,2,
-Montevidéu,Rivera (Uruguai),3,1
-Montevidéu,Buenos Aires,2,
-Valparaíso,Santiago,1,
