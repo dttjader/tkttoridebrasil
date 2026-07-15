@@ -1,185 +1,185 @@
-origem,destino,tamanho,meta
-Montevidéu(URU),São Paulo,7,1
-Montevidéu(URU),Rio de Janeiro,8,1
-Montevidéu(URU),Brasília,11,1
-Montevidéu(URU),Manaus,14,1
-Montevidéu(URU),Natal,17,1
-Montevidéu(URU),Assunção(PAR),6,1
-Montevidéu(URU),Buenos Aires(ARG),10,1
-Montevidéu(URU),La Paz(BOL),12,1
-Montevidéu(URU),Lima(PER),16,1
-Montevidéu(URU),Caracas(VEN),23,1
-Buenos Aires(ARG),Curitiba,7,1
-Buenos Aires(ARG),Porto Alegre,7,1
-Buenos Aires(ARG),Rio de Janeiro,10,1
-Buenos Aires(ARG),Brasília,11,1
-Buenos Aires(ARG),Manaus,15,1
-Buenos Aires(ARG),Natal,19,1
-Buenos Aires(ARG),La Paz(BOL),10,1
-Buenos Aires(ARG),Lima(PER),14,1
-Buenos Aires(ARG),Pico da Neblina,16,1
-Buenos Aires(ARG),Bogotá(COL),21,1
-Buenos Aires(ARG),Caracas(VEN),24,1
-Assunção(PAR),Curitiba,3,1
-Assunção(PAR),Porto Alegre,3,1
-Assunção(PAR),Cuiabá,5,1
-Assunção(PAR),Brasília,7,1
-Assunção(PAR),São Paulo,6,1
-Assunção(PAR),Manaus,11,1
-Assunção(PAR),Salvador,12,1
-Assunção(PAR),Fortaleza,16,1
-Assunção(PAR),Lima(PER),10,1
-Assunção(PAR),Pico da Neblina,15,1
-Assunção(PAR),Bogotá(COL),17,1
-Assunção(PAR),Caracas(VEN),20,1
-La Paz(BOL),Uberlândia,9,1
-La Paz(BOL),Boa Vista,10,1
-La Paz(BOL),São Paulo,11,1
-La Paz(BOL),Recife,14,1
-La Paz(BOL),Caracas(VEN),14,1
-Lima(PER),Tabatinga,6,1
-Lima(PER),Bogotá(COL),11,1
-Lima(PER),Manaus,9,1
-Lima(PER),São Luis,17,1
-Lima(PER),Brasília,12,1
-Lima(PER),Recife,18,1
-Lima(PER),BH,14,1
-Bogotá(COL),Manaus,7,1
-Bogotá(COL),Brasília,16,1
-Bogotá(COL),Recife,18,1
-Caracas(VEN),Belém,12,1
-Caracas(VEN),Cuiabá,14,1
-Porto Alegre,Rio de Janeiro,5,1
-Porto Alegre,Brasília,8,1
-Porto Alegre,Recife,14,1
-Porto Alegre,Belém,17,1
-Porto Alegre,Manaus,10,1
-Porto Alegre,Cruzeiro do Sul,15,1
-Curitiba,Teresina,14,1
-Curitiba, S.A dos Carajás,11,1
-Curitiba,Rio Branco,12,1
-Foz do Iguaçu,Tabatinga,13,1
-Foz do Iguaçu,Palmas,11,1
-Foz do Iguaçu,Porto Seguro,9,1
-São Paulo,Recife,10,1
-São Paulo,Fortaleza,11,1
-São Paulo,Manaus,13,1
-São Paulo,Belém,13,1
-São Paulo,Rio Branco,14,1
-Rio de Janeiro,Porto Velho,11,1
-Rio de Janeiro,São Luis,14,1
-Rio de Janeiro,Boa Vista,15,1
-Rio de Janeiro,Cruzeiro do Sul,16,1
-Vitória,Teresina,10,1
-Vitória,Tabatinga,15,1
-Vitória,Pico da Neblina,15,1
-BH,Palmas,9,1
-BH,Altamira,9,1
-BH,Rio Branco,12,1
-Uberlândia,Fortaleza,8,1
-Uberlândia,Palmas,8,1
-Campo Grande,S.A dos Carajás,7,1
-Campo Grande,Juazeiro,8,1
-Salvador,Pico da Neblina,14,1
-Salvador,Porto Velho,14,1
-Recife,Altamira,9,1
-Recife,Boa Vista,14,1
-Recife,Cruzeiro do Sul,18,1
-Montevidéu(URU),Porto Alegre,3,
-Montevidéu(URU),Porto Alegre,3,
-Montevidéu(URU),Foz do Iguaçu,5,
-Buenos Aires(ARG),Assunção(PAR),4,
-Buenos Aires(ARG),Assunção(PAR),4,
-Assunção(PAR),La Paz(BOL),6,
-Assunção(PAR),Foz do Iguaçu,1,
-Assunção(PAR),Foz do Iguaçu,1,
-Assunção(PAR),Campo Grande,3,
-La Paz(BOL),Cuiabá,5,
-La Paz(BOL),Cuiabá,5,
-La Paz(BOL),Rio Branco,3,
-La Paz(BOL),Porto Velho,4,
-La Paz(BOL),Porto Velho,4,
-La Paz(BOL),Lima(PER),4,
-Lima(PER),Rio Branco,4,
-Lima(PER),Cruzeiro do Sul,3,
-Lima(PER),Cruzeiro do Sul,3,
-Bogotá(COL),Pico da Neblina,4,
-Bogotá(COL),Tabatinga,5,
-Bogotá(COL),Caracas(VEN),4,
-Caracas(VEN),Pico da Neblina,5,
-Caracas(VEN),Boa Vista,6,
-Porto Alegre,Foz do Iguaçu,2,
-Porto Alegre,Curitiba,2,
-Porto Alegre,Curitiba,2,
-Curitiba,São Paulo,2,
-Curitiba,Foz do Iguaçu,2,
-Curitiba,Campo Grande,3,
-Foz do Iguaçu,Campo Grande,2,
-Foz do Iguaçu,Campo Grande,2,
-São Paulo,Rio de Janeiro,1,
-São Paulo,Rio de Janeiro,1,
-São Paulo,BH,2,
-Rio de Janeiro,BH,1,
-Rio de Janeiro,BH,1,
-Rio de Janeiro,Vitória,2,
-Rio de Janeiro,Salvador,6,
-Vitória,BH,1,
-Vitória,Porto Seguro,2,
-Vitória,Porto Seguro,2,
-BH,Brasília,2,
-BH,Uberlândia,2,
-BH,Juazeiro,6,
-Uberlândia,Brasília,1,
-Uberlândia,Brasília,1,
-Uberlândia,Campo Grande,3,
-Campo Grande,Cuiabá,2,
-Campo Grande,Cuiabá,2,
-Campo Grande,Brasília,4,
-Porto Seguro,Salvador,2,
-Porto Seguro,Salvador,2,
-Brasília,Cuiabá,3,
-Brasília,Juazeiro,4,
-Brasília,S.A. dos Carajás,5,
-Cuiabá,S.A. dos Carajás,5,
-Cuiabá,Porto Velho,5,
-Cuiabá,Manaus,6,
-Cuiabá,Manaus,6,
-Salvador,Juazeiro,2,
-Salvador,Recife,3,
-Recife,Juazeiro,2,
-Recife,Juazeiro,2,
-Recife,Fortaleza,4,
-Juazeiro,Fortaleza,3,
-Juazeiro,Palmas,3,
-Juazeiro,Palmas,3,
-Palmas,Belém,4,
-Palmas,S.A. dos Carajás,2,
-Palmas,S.A. dos Carajás,2,
-S.A. dos Carajás,Altamira,2,
-S.A. dos Carajás,Altamira,2,
-S.A. dos Carajás,Manaus,4,
-Porto Velho,Rio Branco,2,
-Porto Velho,Rio Branco,2,
-Porto Velho,Manaus,3,
-Porto Velho,Tabatinga,4,
-Rio Branco,Tabatinga,3,
-Rio Branco,Cruzeiro do Sul,3,
-Cruzeiro do Sul,Tabatinga,2,
-Cruzeiro do Sul,Tabatinga,2,
-Fortaleza,Teresina,1,
-Fortaleza,São Luis,2,
-Teresina,São Luis,1,
-Teresina,Belém,4,
-Altamira,Manaus,4,
-Altamira,Boa Vista,5,
-Altamira,Boa Vista,5,
-Manaus,Boa Vista,3,
-Manaus,Pico da Neblina,3,
-Manaus,Pico da Neblina,3,
-Manaus,Tabatinga,5,
-Tabatinga,Pico da Neblina,3,
-São Luis,Belém,2,
-São Luis,Belém,2,
-Belém,Altamira,2,
-Belém,Boa Vista,6,
-Boa Vista,Pico da Neblina,3,
+origem,destino,tamanho,cor,meta
+Montevidéu(URU),São Paulo,7,,1
+Montevidéu(URU),Rio de Janeiro,8,,1
+Montevidéu(URU),Brasília,11,,1
+Montevidéu(URU),Manaus,14,,1
+Montevidéu(URU),Natal,17,,1
+Montevidéu(URU),Assunção(PAR),6,,1
+Montevidéu(URU),Buenos Aires(ARG),10,,1
+Montevidéu(URU),La Paz(BOL),12,,1
+Montevidéu(URU),Lima(PER),16,,1
+Montevidéu(URU),Caracas(VEN),23,,1
+Buenos Aires(ARG),Curitiba,7,,1
+Buenos Aires(ARG),Porto Alegre,7,,1
+Buenos Aires(ARG),Rio de Janeiro,10,,1
+Buenos Aires(ARG),Brasília,11,,1
+Buenos Aires(ARG),Manaus,15,,1
+Buenos Aires(ARG),Natal,19,,1
+Buenos Aires(ARG),La Paz(BOL),10,,1
+Buenos Aires(ARG),Lima(PER),14,,1
+Buenos Aires(ARG),Pico da Neblina,16,,1
+Buenos Aires(ARG),Bogotá(COL),21,,1
+Buenos Aires(ARG),Caracas(VEN),24,,1
+Assunção(PAR),Curitiba,3,,1
+Assunção(PAR),Porto Alegre,3,,1
+Assunção(PAR),Cuiabá,5,,1
+Assunção(PAR),Brasília,7,,1
+Assunção(PAR),São Paulo,6,,1
+Assunção(PAR),Manaus,11,,1
+Assunção(PAR),Salvador,12,,1
+Assunção(PAR),Fortaleza,16,,1
+Assunção(PAR),Lima(PER),10,,1
+Assunção(PAR),Pico da Neblina,15,,1
+Assunção(PAR),Bogotá(COL),17,,1
+Assunção(PAR),Caracas(VEN),20,,1
+La Paz(BOL),Uberlândia,9,,1
+La Paz(BOL),Boa Vista,10,,1
+La Paz(BOL),São Paulo,11,,1
+La Paz(BOL),Recife,14,,1
+La Paz(BOL),Caracas(VEN),14,,1
+Lima(PER),Tabatinga,6,,1
+Lima(PER),Bogotá(COL),11,,1
+Lima(PER),Manaus,9,,1
+Lima(PER),São Luis,17,,1
+Lima(PER),Brasília,12,,1
+Lima(PER),Recife,18,,1
+Lima(PER),BH,14,,1
+Bogotá(COL),Manaus,7,,1
+Bogotá(COL),Brasília,16,,1
+Bogotá(COL),Recife,18,,1
+Caracas(VEN),Belém,12,,1
+Caracas(VEN),Cuiabá,14,,1
+Porto Alegre,Rio de Janeiro,5,,1
+Porto Alegre,Brasília,8,,1
+Porto Alegre,Recife,14,,1
+Porto Alegre,Belém,17,,1
+Porto Alegre,Manaus,10,,1
+Porto Alegre,Cruzeiro do Sul,15,,1
+Curitiba,Teresina,14,,1
+Curitiba, S.A dos Carajás,11,,1
+Curitiba,Rio Branco,12,,1
+Foz do Iguaçu,Tabatinga,13,,1
+Foz do Iguaçu,Palmas,11,,1
+Foz do Iguaçu,Porto Seguro,9,,1
+São Paulo,Recife,10,,1
+São Paulo,Fortaleza,11,,1
+São Paulo,Manaus,13,,1
+São Paulo,Belém,13,,1
+São Paulo,Rio Branco,14,,1
+Rio de Janeiro,Porto Velho,11,,1
+Rio de Janeiro,São Luis,14,,1
+Rio de Janeiro,Boa Vista,15,,1
+Rio de Janeiro,Cruzeiro do Sul,16,,1
+Vitória,Teresina,10,,1
+Vitória,Tabatinga,15,,1
+Vitória,Pico da Neblina,15,,1
+BH,Palmas,9,,1
+BH,Altamira,9,,1
+BH,Rio Branco,12,,1
+Uberlândia,Fortaleza,8,,1
+Uberlândia,Palmas,8,,1
+Campo Grande,S.A dos Carajás,7,,1
+Campo Grande,Juazeiro,8,,1
+Salvador,Pico da Neblina,14,,1
+Salvador,Porto Velho,14,,1
+Recife,Altamira,9,,1
+Recife,Boa Vista,14,,1
+Recife,Cruzeiro do Sul,18,,1
+Montevidéu(URU),Porto Alegre,3,,
+Montevidéu(URU),Porto Alegre,3,,
+Montevidéu(URU),Foz do Iguaçu,5,,
+Buenos Aires(ARG),Assunção(PAR),4,,
+Buenos Aires(ARG),Assunção(PAR),4,,
+Assunção(PAR),La Paz(BOL),6,,
+Assunção(PAR),Foz do Iguaçu,1,,
+Assunção(PAR),Foz do Iguaçu,1,,
+Assunção(PAR),Campo Grande,3,,
+La Paz(BOL),Cuiabá,5,,
+La Paz(BOL),Cuiabá,5,,
+La Paz(BOL),Rio Branco,3,,
+La Paz(BOL),Porto Velho,4,,
+La Paz(BOL),Porto Velho,4,,
+La Paz(BOL),Lima(PER),4,,
+Lima(PER),Rio Branco,4,,
+Lima(PER),Cruzeiro do Sul,3,,
+Lima(PER),Cruzeiro do Sul,3,,
+Bogotá(COL),Pico da Neblina,4,,
+Bogotá(COL),Tabatinga,5,,
+Bogotá(COL),Caracas(VEN),4,,
+Caracas(VEN),Pico da Neblina,5,,
+Caracas(VEN),Boa Vista,6,,
+Porto Alegre,Foz do Iguaçu,2,,
+Porto Alegre,Curitiba,2,,
+Porto Alegre,Curitiba,2,,
+Curitiba,São Paulo,2,,
+Curitiba,Foz do Iguaçu,2,,
+Curitiba,Campo Grande,3,,
+Foz do Iguaçu,Campo Grande,2,,
+Foz do Iguaçu,Campo Grande,2,,
+São Paulo,Rio de Janeiro,1,,
+São Paulo,Rio de Janeiro,1,,
+São Paulo,BH,2,,
+Rio de Janeiro,BH,1,,
+Rio de Janeiro,BH,1,,
+Rio de Janeiro,Vitória,2,,
+Rio de Janeiro,Salvador,6,,
+Vitória,BH,1,,
+Vitória,Porto Seguro,2,,
+Vitória,Porto Seguro,2,,
+BH,Brasília,2,,
+BH,Uberlândia,2,,
+BH,Juazeiro,6,,
+Uberlândia,Brasília,1,,
+Uberlândia,Brasília,1,,
+Uberlândia,Campo Grande,3,,
+Campo Grande,Cuiabá,2,,
+Campo Grande,Cuiabá,2,,
+Campo Grande,Brasília,4,,
+Porto Seguro,Salvador,2,,
+Porto Seguro,Salvador,2,,
+Brasília,Cuiabá,3,,
+Brasília,Juazeiro,4,,
+Brasília,S.A. dos Carajás,5,,
+Cuiabá,S.A. dos Carajás,5,,
+Cuiabá,Porto Velho,5,,
+Cuiabá,Manaus,6,,
+Cuiabá,Manaus,6,,
+Salvador,Juazeiro,2,,
+Salvador,Recife,3,,
+Recife,Juazeiro,2,,
+Recife,Juazeiro,2,,
+Recife,Fortaleza,4,,
+Juazeiro,Fortaleza,3,,
+Juazeiro,Palmas,3,,
+Juazeiro,Palmas,3,,
+Palmas,Belém,4,,
+Palmas,S.A. dos Carajás,2,,
+Palmas,S.A. dos Carajás,2,,
+S.A. dos Carajás,Altamira,2,,
+S.A. dos Carajás,Altamira,2,,
+S.A. dos Carajás,Manaus,4,,
+Porto Velho,Rio Branco,2,,
+Porto Velho,Rio Branco,2,,
+Porto Velho,Manaus,3,,
+Porto Velho,Tabatinga,4,,
+Rio Branco,Tabatinga,3,,
+Rio Branco,Cruzeiro do Sul,3,,
+Cruzeiro do Sul,Tabatinga,2,,
+Cruzeiro do Sul,Tabatinga,2,,
+Fortaleza,Teresina,1,,
+Fortaleza,São Luis,2,,
+Teresina,São Luis,1,,
+Teresina,Belém,4,,
+Altamira,Manaus,4,,
+Altamira,Boa Vista,5,,
+Altamira,Boa Vista,5,,
+Manaus,Boa Vista,3,,
+Manaus,Pico da Neblina,3,,
+Manaus,Pico da Neblina,3,,
+Manaus,Tabatinga,5,,
+Tabatinga,Pico da Neblina,3,,
+São Luis,Belém,2,,
+São Luis,Belém,2,,
+Belém,Altamira,2,,
+Belém,Boa Vista,6,,
+Boa Vista,Pico da Neblina,3,,
