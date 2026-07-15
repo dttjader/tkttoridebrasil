@@ -300,9 +300,32 @@
         .table-wrapper {
             max-height: 400px;
             overflow-y: auto;
+            overflow-x: auto;
             border: 1px solid var(--primary);
             border-radius: 4px;
             margin-top: 12px;
+        }
+
+        .color-cell {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            font-family: var(--font-body);
+        }
+
+        .color-swatch {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid rgba(233, 220, 184, 0.5);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+            flex-shrink: 0;
+        }
+
+        .color-cell-empty {
+            color: rgba(233, 220, 184, 0.4);
         }
 
         table {
@@ -678,6 +701,7 @@
                                 <th>Destino</th>
                                 <th>Tamanho</th>
                                 <th>Pontos</th>
+                                <th>Cor</th>
                                 <th>Dono</th>
                             </tr>
                         </thead>
@@ -814,6 +838,26 @@
                 return pointsByLength[len] || 0;
             }
 
+            const routeColors = {
+                cinza: { hex: '#9e9e9e', label: 'Cinza' },
+                branco: { hex: '#ffffff', label: 'Branco' },
+                preto: { hex: '#1a1a1a', label: 'Preto' },
+                azul: { hex: '#1565c0', label: 'Azul' },
+                vermelho: { hex: '#c62828', label: 'Vermelho' },
+                verde: { hex: '#2e7d32', label: 'Verde' },
+                amarelo: { hex: '#f9a825', label: 'Amarelo' },
+                laranja: { hex: '#ef6c00', label: 'Laranja' },
+                rosa: { hex: '#ec407a', label: 'Rosa' }
+            };
+
+            function renderColorCell(cor) {
+                const entry = routeColors[cor];
+                if (!entry) {
+                    return '<span class="color-cell color-cell-empty">—</span>';
+                }
+                return `<span class="color-cell"><span class="color-swatch" style="background:${entry.hex};" title="${entry.label}"></span>${entry.label}</span>`;
+            }
+
             function shuffle(array) {
                 const arr = array.slice();
                 for (let i = arr.length - 1; i > 0; i--) {
@@ -843,6 +887,7 @@
                     origem: headers.indexOf('origem'),
                     destino: headers.indexOf('destino'),
                     tamanho: headers.indexOf('tamanho'),
+                    cor: headers.indexOf('cor'),
                     meta: headers.indexOf('meta')
                 };
                 const rows = [];
@@ -852,6 +897,7 @@
                     const origem = cells[idx.origem] || '';
                     const destino = cells[idx.destino] || '';
                     const tamanho = parseInt(cells[idx.tamanho], 10) || 0;
+                    const corRaw = idx.cor >= 0 && cells[idx.cor] !== undefined ? cells[idx.cor].trim().toLowerCase() : '';
                     const metaRaw = cells[idx.meta] !== undefined ? cells[idx.meta].trim() : '';
                     const meta = metaRaw === '' ? 0 : (parseInt(metaRaw, 10) || 0);
                     if (!origem || !destino) continue;
@@ -860,6 +906,7 @@
                         origem: origem.trim(),
                         destino: destino.trim(),
                         tamanho: tamanho,
+                        cor: corRaw,
                         meta: meta,
                         points: meta === 1 ? tamanho : getPoints(tamanho)
                     });
@@ -1128,6 +1175,7 @@
                         <td>${escapeHtml(route.destino)}</td>
                         <td>${route.tamanho}</td>
                         <td>${route.points}</td>
+                        <td>${renderColorCell(route.cor)}</td>
                         <td>
                             <select class="route-owner" data-route-id="${route.id}">
                                 <option value="">Sem dono</option>
