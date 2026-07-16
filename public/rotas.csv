@@ -1,38 +1,38 @@
 origem,destino,tamanho,cor,meta
+Assunção(PAR),Curitiba,3,,1
+Assunção(PAR),Porto Alegre,3,,1
+Assunção(PAR),Cuiabá,5,,1
 Montevidéu(URU),Assunção(PAR),6,,1
+Assunção(PAR),São Paulo,6,,1
 Montevidéu(URU),São Paulo,7,,1
 Buenos Aires(ARG),Curitiba,7,,1
 Buenos Aires(ARG),Porto Alegre,7,,1
+Assunção(PAR),Brasília,7,,1
 Montevidéu(URU),Rio de Janeiro,8,,1
 Montevidéu(URU),Buenos Aires(ARG),10,,1
 Buenos Aires(ARG),Rio de Janeiro,10,,1
 Buenos Aires(ARG),La Paz(BOL),10,,1
+Assunção(PAR),Lima(PER),10,,1
 Montevidéu(URU),Brasília,11,,1
 Buenos Aires(ARG),Brasília,11,,1
+Assunção(PAR),Manaus,11,,1
 Montevidéu(URU),La Paz(BOL),12,,1
+Assunção(PAR),Salvador,12,,1
 Montevidéu(URU),Manaus,14,,1
 Buenos Aires(ARG),Lima(PER),14,,1
 Buenos Aires(ARG),Manaus,15,,1
+Assunção(PAR),Pico da Neblina,15,,1
 Montevidéu(URU),Lima(PER),16,,1
 Buenos Aires(ARG),Pico da Neblina,16,,1
+Assunção(PAR),Fortaleza,16,,1
 Montevidéu(URU),Natal,17,,1
+Assunção(PAR),Bogotá(COL),17,,1
 Buenos Aires(ARG),Natal,19,,1
+Assunção(PAR),Caracas(VEN),20,,1
 Buenos Aires(ARG),Bogotá(COL),21,,1
 Montevidéu(URU),Caracas(VEN),23,,1
 Buenos Aires(ARG),Caracas(VEN),24,,1
 
-Assunção(PAR),Curitiba,3,,1
-Assunção(PAR),Porto Alegre,3,,1
-Assunção(PAR),Cuiabá,5,,1
-Assunção(PAR),Brasília,7,,1
-Assunção(PAR),São Paulo,6,,1
-Assunção(PAR),Manaus,11,,1
-Assunção(PAR),Salvador,12,,1
-Assunção(PAR),Fortaleza,16,,1
-Assunção(PAR),Lima(PER),10,,1
-Assunção(PAR),Pico da Neblina,15,,1
-Assunção(PAR),Bogotá(COL),17,,1
-Assunção(PAR),Caracas(VEN),20,,1
 La Paz(BOL),Uberlândia,9,,1
 La Paz(BOL),Boa Vista,10,,1
 La Paz(BOL),São Paulo,11,,1
